@@ -1,6 +1,6 @@
 ---
-title             : "The title"
-shorttitle        : "Title"
+title             : "Assignment 2"
+shorttitle        : "Assign2"
 
 author: 
   - name          : "Kaila Scott-Charles"
@@ -10,7 +10,7 @@ author:
     email         : "my@email.com"
     role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
       - "Conceptualization"
-      - "Writing - Original Draft Preparation"
+      - "Writing - Original Draft Preparation" 
       - "Writing - Review & Editing"
   - name          : "Ernst-August Doelle"
     affiliation   : "1,2"
@@ -69,6 +69,12 @@ set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
+
+# this is a graph
+```{r}
+source("Assignment 2.R")
+
+```
 
 
 # Methods
