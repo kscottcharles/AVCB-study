@@ -19,10 +19,10 @@ This dataset comes from a parent-child dyad study examining the relations betwee
 Parents also responded to some exploratory questions, including their perceptions of the teacher's vs. parents' responsibility in addressing racism and diversity, equity, and inclusion with children (7-point scales).
 
 # Overview of Planned Project:  
-In this project, we make the following predictions*:
-*H1:* Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age. 
-*H2:* Parents’ racial ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age. 
-*H3:* Higher authoritarian values will positively predict more colorblind attitudes.
+In this project, we make the following predictions*:  
+*H1:* Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age.   
+*H2:* Parents’ racial ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age.   
+*H3:* Higher authoritarian values will positively predict more colorblind attitudes.  
 
 We plan to examine the following:  
 **RELATIONSHIPS BETWEEN PARENT VARIABLES**
