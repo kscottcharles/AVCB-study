@@ -44,30 +44,30 @@ Relations between Classroom Choice and other Colorblind/Color-conscious Values (
 
 # File Tree
 
-/research-study
-├── data
-│   ├── raw
-│   │   ├── dataset1.csv
-│   │   └── dataset2.xlsx
-│   ├── processed
-│   │   ├── cleaned_data.csv
-│   │   └── transformed_data.xlsx
-├── code
-│   ├── data_processing
-│   │   ├── clean_data_script.R
-│   │   └── transform_data_script.R
-│   ├── analysis
-│   │   ├── statistical_analysis_script.R
-│   │   └── visualization_script.R
-├── documentation
-│   ├── README.md
-│   ├── data_dictionary.md
-│   ├── code_guide.md
-│   └── research_paper.md
-├── results
-│   ├── charts
-│   │   ├── bar_chart.png
-│   │   └── scatter_plot.png
-│   └── statistical_results.txt
-└── .gitignore
+/research-study  
+├── data  
+│   ├── raw  
+│   │   ├── dataset1.csv  
+│   │   └── dataset2.xlsx  
+│   ├── processed  
+│   │   ├── cleaned_data.csv  
+│   │   └── transformed_data.xlsx  
+├── code  
+│   ├── data_processing  
+│   │   ├── clean_data_script.R  
+│   │   └── transform_data_script.R  
+│   ├── analysis  
+│   │   ├── statistical_analysis_script.R  
+│   │   └── visualization_script.R  
+├── documentation  
+│   ├── README.md  
+│   ├── data_dictionary.md  
+│   ├── code_guide.md  
+│   └── research_paper.md  
+├── results  
+│   ├── charts  
+│   │   ├── bar_chart.png  
+│   │   └── scatter_plot.png  
+│   └── statistical_results.txt  
+└── .gitignore  
 
