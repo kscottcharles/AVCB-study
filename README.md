@@ -20,18 +20,18 @@ Parents also responded to some exploratory questions, including their perception
 
 # Overview of Planned Project:  
 In this project, we make the following predictions*:  
-*H1:* Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age.   
-*H2:* Parents’ racial ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age.   
-*H3:* Higher authoritarian values will positively predict more colorblind attitudes.  
+*H1:* Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age.    
+*H2:* Parents’ racial ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age.    
+*H3:* Higher authoritarian values will positively predict more colorblind attitudes.   
 
 We plan to examine the following:  
 **RELATIONSHIPS BETWEEN PARENT VARIABLES**
-Authoritarian values & Classroom choices
-Classroom choices & COBRAS
-Authoritarian values & COBRAS
-Authoritarian values & Responsibility
-Classroom choices & Responsibility
-Responsibility & COBRAS
+Authoritarian values & Classroom choices  
+Classroom choices & COBRAS  
+Authoritarian values & COBRAS  
+Authoritarian values & Responsibility  
+Classroom choices & Responsibility  
+Responsibility & COBRAS  
 
 **RELATIONSHIPS BETWEEN CHILD VARIABLES**
 Authoritarian values & Classroom choices  
