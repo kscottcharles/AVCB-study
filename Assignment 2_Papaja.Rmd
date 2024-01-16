@@ -1,6 +1,6 @@
 ---
-title             : "Assignment 2"
-shorttitle        : "Assign2"
+title             : "Authoritarian Values and Colorblindness"
+shorttitle        : "AVCB"
 
 author: 
   - name          : "Kaila Scott-Charles"
@@ -12,17 +12,17 @@ author:
       - "Conceptualization"
       - "Writing - Original Draft Preparation" 
       - "Writing - Review & Editing"
-  - name          : "Ernst-August Doelle"
-    affiliation   : "1,2"
+  - name          : "Isobel Heck"
+    affiliation   : "2"
     role:
       - "Writing - Review & Editing"
       - "Supervision"
 
 affiliation:
   - id            : "1"
-    institution   : "Wilhelm-Wundt-University"
+    institution   : "University of Chicago"
   - id            : "2"
-    institution   : "Konstanz Business School"
+    institution   : "University of Rochester"
 
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
@@ -67,12 +67,53 @@ r_refs("r-references.bib")
 # Seed for random number generation
 set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
-```
 
+```
 
 # this is a graph
 ```{r}
-source("Assignment 2.R")
+#source("Assignment 2.R")
+
+```
+# **Heading 1 (bolded)**  
+xyz
+
+## *Heading 2 (italicized)*  
+xyz
+
+### Heading 3  
+xyz  
+
+# Starting Lists from HW5
+
+**Unordered list**
+
+* This is the first line in my unordered list
+* Here is another line in the list
+    + This is an indented line
+* Here is another line in the unordered list
+
+
+**Ordered List**  
+
+1. First line
+2. Second line
+3. Third line
+    + Item 3a
+    + Item 3b
+
+
+
+**Here, I am inserting a url**  
+[This is a link to the RStudio website](https://www.rstudio.com)
+
+<!-- This is my HTML-style comment. I can see this, but it won't show up when I knit the document -->
+
+
+```{r call-function, echo=TRUE}
+#Assignment 5 - call function
+source("functions.R")
+
 
 ```
 
