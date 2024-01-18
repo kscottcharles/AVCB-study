@@ -70,11 +70,60 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 ```
 
-# this is a graph
 ```{r}
-#source("Assignment 2.R")
+#load packages
+
+library(dplyr)
+library(tidyverse)
 
 ```
+
+```{r load data, include=FALSE}
+AVCB_wp_kids <- read.csv("AVCB_wp_kids.csv", na.strings = c("", "NA", "#N/A"))
+AVCB_wp_parents <- read.csv("AVCB_wp_parents.csv", na.strings = "")
+
+#dataset is tidy :)
+
+```
+
+```{r combine files, include=FALSE}
+#combine files
+AVCB_wp_dyads <- merge(AVCB_wp_kids, AVCB_wp_parents, by = "Family_ID")
+
+#renaming variables
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Single Child ID" = "ID.x")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "All Child IDs" = "ID.y")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Child Version" = "Version.x")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Parent Version" = "Version.y")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Child_CB_Self_choice" = "CB_Self_choice.x")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Parent_CB_Self_choice" = "CB_Self_choice.y")
+
+```
+
+```{r create intermediate dataset, include=FALSE}
+#Checking column names before creating ID
+print(names(AVCB_wp_dyads))
+
+AVCB_wp_dyads_ID <- AVCB_wp_dyads |> 
+  select(Family_ID:Gender, P1_Race.Eth, P2_Race.Eth, P1_pol:P2_ed, Child_CB_Self_choice, CB_Parents_choice, RE_Ind_Self_choice:Parent_sum, RE_Ind:WB_Cons,COBRAS_1_num:AV_sum)
+
+#moving AV choice variables tgo right before AV num variables (for parents) - will want to rename these later so that it's clear which ones are kid vs. parent variables
+
+AVCB_wp_dyads_ID <- AVCB_wp_dyads_ID |> 
+  relocate(RE_Ind:WB_Cons, .before = RE_Ind_num)
+
+AVCB_wp_dyads_ID
+
+#Checking column names
+print(names(AVCB_wp_dyads_ID))
+
+```
+
+```{r save intermediate dataset, include=FALSE}
+write_csv(AVCB_wp_dyads_ID, "AVCB_wp_dyads_ID.csv")
+
+```
+
 # **Heading 1 (bolded)**  
 xyz
 
@@ -113,7 +162,7 @@ xyz
 ```{r call-function, echo=TRUE}
 #Assignment 5 - call function
 source("functions.R")
-
+hello_world("Kaila")
 
 ```
 
