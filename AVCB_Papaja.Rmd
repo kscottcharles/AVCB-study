@@ -1,0 +1,313 @@
+---
+title             : "Authoritarian Values and Colorblindness"
+shorttitle        : "AVCB"
+
+author: 
+  - name          : "Kaila Scott-Charles"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation" 
+      - "Writing - Review & Editing"
+  - name          : "Isobel Heck"
+    affiliation   : "2"
+    role:
+      - "Writing - Review & Editing"
+      - "Supervision"
+
+affiliation:
+  - id            : "1"
+    institution   : "University of Chicago"
+  - id            : "2"
+    institution   : "University of Rochester"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  One or two sentences to put the results into a more **general context**.
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : "r-references.bib"
+
+floatsintext      : no
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+
+```
+
+```{r}
+#load packages
+
+library(dplyr)
+library(tidyverse)
+library(readr)
+library(ggplot2)
+
+```
+
+```{r load data, include=FALSE}
+AVCB_wp_kids <- read.csv("Data/AVCB_wp_kids.csv", na.strings = c("", "NA", "#N/A"))
+AVCB_wp_parents <- read.csv("Data/AVCB_wp_parents.csv", na.strings = "")
+
+```
+
+```{r combine files, include=FALSE}
+#combine files
+AVCB_wp_dyads <- merge(AVCB_wp_kids, AVCB_wp_parents, by = "Family_ID")
+
+#renaming variables
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Single Child ID" = "ID.x")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "All Child IDs" = "ID.y")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Child Version" = "Version.x")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Parent Version" = "Version.y")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Child_CB_Self_choice" = "CB_Self_choice.x")
+AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Parent_CB_Self_choice" = "CB_Self_choice.y")
+
+```
+
+```{r create intermediate dataset, include=FALSE}
+#Checking column names before creating ID
+print(names(AVCB_wp_dyads))
+
+AVCB_wp_dyads_ID <- AVCB_wp_dyads |> 
+  select(Family_ID:Gender, P1_Race.Eth, P2_Race.Eth, P1_pol:P2_ed, Child_CB_Self_choice, CB_Parents_choice, RE_Ind_Self_choice:Parent_sum, RE_Ind:WB_Cons,COBRAS_1_num:AV_sum)
+
+#moving AV choice variables tgo right before AV num variables (for parents) - will want to rename these later so that it's clear which ones are kid vs. parent variables
+
+AVCB_wp_dyads_ID <- AVCB_wp_dyads_ID |> 
+  relocate(RE_Ind:WB_Cons, .before = RE_Ind_num)
+
+AVCB_wp_dyads_ID
+
+#Checking column names
+print(names(AVCB_wp_dyads_ID))
+
+```
+
+```{r save intermediate dataset, include=FALSE}
+write_csv(AVCB_wp_dyads_ID, "AVCB_wp_dyads_ID.csv")
+
+```
+
+# **Heading 1 (bolded)**  
+xyz
+
+## *Heading 2 (italicized)*  
+xyz
+
+### Heading 3  
+xyz  
+
+# Starting Lists from HW5
+
+**Unordered list**
+
+* This is the first line in my unordered list
+* Here is another line in the list
+    + This is an indented line
+* Here is another line in the unordered list
+
+
+**Ordered List**  
+
+1. First line
+2. Second line
+3. Third line
+    + Item 3a
+    + Item 3b
+
+
+
+**Here, I am inserting a url**  
+[This is a link to the RStudio website](https://www.rstudio.com)
+
+<!-- This is my HTML-style comment. I can see this, but it won't show up when I knit the document -->
+
+
+```{r call-function, echo=FALSE}
+#Assignment 5 - call function
+#source("functions.R")
+#hello_world("Kaila")
+
+```
+# **Mock up 2 plots (of 2 different types) you could include in your final report**
+
+# **H1 Plot**
+```{r H1 Plot, eval=TRUE, include=TRUE}
+#H1: Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age.    
+    
+#Scatterplot with parent AV score on x axis, child AV score on y axis  + smooth line with age plotted in different colors 
+
+AVCB_H1 <-read.csv("Data/AVCB_H1.csv")
+
+#Transform AV scores + rename
+AVCB_H1 <- AVCB_H1 %>%
+  mutate(AV_sum = AV_sum / 4)
+
+names(AVCB_H1)[names(AVCB_H1) == "AV_sum"] <- "Parent_AVscore"
+
+
+AVCB_H1 <- AVCB_H1 %>%
+  mutate(Self_sum = Self_sum / 4)
+
+names(AVCB_H1)[names(AVCB_H1) == "Self_sum"] <- "Child_AVscore"
+
+ggplot(
+  data = AVCB_H1,
+  mapping = aes(x = Parent_AVscore, y = Child_AVscore, color = factor(Years))
+) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_jitter()
+
+#Change colors
+#Rename labels
+#Change to simple theme
+#Give title
+
+```
+
+# **H2 Plot**
+This hypothesis has 2 ways to test the question. This is because we tested kids' diversity ideology one way (binary choice), but we tested parents' diversity ideology two ways: 1) same binary choice measure, 2) A continuous scale measure. I will create a plot for both ways.
+```{r H2 Plot, eval=TRUE, message = FALSE, warning=FALSE}
+#H2: Parents’ diversity ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age.   
+    
+###For child binary/parent continuous: 
+
+#2 Boxplots of parent COBRA score comparing kids who choose CC vs. kids who choose CB 
+
+ggplot(AVCB_H2, aes(x = factor(Years), y = COBRAS_avg, color = Years)) +
+  facet_wrap(vars(Child_Class_Self_choice)) +
+  geom_boxplot() + labs(title = "Side-by-Side Box Plots") +
+  geom_jitter()
+
+#Take out NAs
+#Change colors
+#Rename labels
+#Change to simple theme
+#Give informative title
+
+##For child binary/parent binary: 
+
+#Stacked barchart with child classroom choice (binary) on x axis with each bar broken down by parent classroom choice (binary)
+
+ggplot(AVCB_H2, aes(x = Child_Class_Self_choice, fill = Parent_Class_Self_choice)) +
+  geom_bar(position = "dodge") +
+  labs(title = "Grouped Bar Plot",
+       x = "Variable1",
+       y = "Count") +
+  scale_fill_manual(values = c("CB" = "blue", "CC" = "red"))  # Customize fill colors if needed
+
+#Take out NAs
+#Change colors
+#Rename labels
+#Change to simple theme
+#Give informative title
+
+#Natalie Suggestion: ??? Forgot to ask during final project meeting
+```
+
+
+```{r H3 Plot, eval=TRUE, message = FALSE, warning= FALSE}
+#H3: Higher authoritarian values will positively predict more colorblind attitudes.
+    #For parents: Scatterplot with parent AV score on x axis, parent COBRA score on y axis
+    #For kids: Barplot with child classroom choice (binary) on x axis and child AV score on y axis
+    #Natalie's Suggestion: 2 Boxplots of parent AV score comparing kids who choose CC vs. kids who choose CB
+      #But how do I add kids' age into this plot????
+
+#Transform AV scores + rename
+AVCB_H3 <- AVCB_H3 %>%
+  mutate(AV_sum = AV_sum / 4)
+
+names(AVCB_H3)[names(AVCB_H3) == "AV_sum"] <- "Parent_AVscore"
+
+
+AVCB_H3 <- AVCB_H3 %>%
+  mutate(Self_sum = Self_sum / 4)
+
+names(AVCB_H3)[names(AVCB_H3) == "Self_sum"] <- "Child_AVscore"
+
+
+    #For parents: Scatterplot with parent AV score on x axis, parent COBRA score on y axis
+
+ggplot(
+  data = AVCB_H3,
+  mapping = aes(x = Parent_AVscore, y = COBRAS_avg)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_jitter()
+
+    #For kids: Barplot with child classroom choice (binary) on x axis and child AV score on y axis
+
+ggplot(AVCB_H3, aes(x = Child_Class_Self_choice, y = Child_AVscore, color= Child_Class_Self_choice)) +
+  geom_boxplot() + labs(title = "Side-by-Side Box Plots") +
+  geom_jitter()
+
+#Take out NAs
+#Change colors
+#Rename labels
+#Change to simple theme
+#Give informative title
+```
+
+
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+
+# Discussion
+
+
+\newpage
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
