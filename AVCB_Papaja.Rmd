@@ -172,119 +172,205 @@ xyz
 #H1: Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age.    
     
 #Scatterplot with parent AV score on x axis, child AV score on y axis  + smooth line with age plotted in different colors 
+#Expect: Positive relation between Parent AV score and Child AV score (stronger positive relation with age)
 
 AVCB_H1 <-read.csv("Data/AVCB_H1.csv")
 
-#Transform AV scores + rename
-AVCB_H1 <- AVCB_H1 %>%
-  mutate(AV_sum = AV_sum / 4)
-
-names(AVCB_H1)[names(AVCB_H1) == "AV_sum"] <- "Parent_AVscore"
-
-
-AVCB_H1 <- AVCB_H1 %>%
-  mutate(Self_sum = Self_sum / 4)
-
-names(AVCB_H1)[names(AVCB_H1) == "Self_sum"] <- "Child_AVscore"
-
-ggplot(
+p1 <- ggplot(
   data = AVCB_H1,
-  mapping = aes(x = Parent_AVscore, y = Child_AVscore, color = factor(Years))
-) +
-  geom_point() +
+  mapping = aes(x = Parent_AVscore, y = Child_AVscore, color = factor(Years))) +
   geom_smooth(method = "lm") +
-  geom_jitter()
+  geom_jitter() +
+    labs(
+      title = "Relation Between Parents' and Children's Authoritarian Values",
+      x = "Parent Authoritarian Values Score (higher = more authoritarian)",
+      y = "Child Authoritarian Values Score (higher = more authoritarian)",
+      color = "Child Age (Years)"  
+    ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Blues")
 
-#Change colors
-#Rename labels
-#Change to simple theme
-#Give title
 
+p1
+
+#maybe better way to visualize?
+
+p1_alt <- AVCB_H1 %>% 
+ggplot(aes(x = Parent_AVscore, y = Child_AVscore, color = factor(Years))) +
+  facet_grid(cols = vars(factor(Years))) +
+  geom_jitter() +
+  geom_smooth(method = "lm") +
+  labs(title = "Side-by-Side Box Plots") +
+    labs(
+      title = "Relation Between Parents' and Children's Authoritarian Values By Child's Age",
+      x = "Parent Authoritarian Values Score (higher = more authoritarian)",
+      y = "Child Authoritarian Values Score (higher = more authoritarian)",
+      color = "Child Age (Years)"
+    ) +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  scale_color_brewer(palette = "Dark2")
+
+p1_alt
 ```
 
 # **H2 Plot**
 This hypothesis has 2 ways to test the question. This is because we tested kids' diversity ideology one way (binary choice), but we tested parents' diversity ideology two ways: 1) same binary choice measure, 2) A continuous scale measure. I will create a plot for both ways.
 ```{r H2 Plot, eval=TRUE, message = FALSE, warning=FALSE}
 #H2: Parents’ diversity ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age.   
+
+AVCB_H2 <-read.csv("Data/AVCB_H2.csv")
     
-###For child binary/parent continuous: 
+##For child binary/parent continuous: 
 
-#2 Boxplots of parent COBRA score comparing kids who choose CC vs. kids who choose CB 
+#Two Boxplots of parent COBRA score comparing kids who choose CC vs. kids who choose CB 
+#Expect: CB boxplots to be higher than CC box plots (and for this to strengthen with age)
+  
+p2a <- AVCB_H2 %>% filter(!is.na(Child_Class_Self_choice)) %>% 
+ggplot(aes(x = Child_Class_Self_choice, y = COBRAS_avg, color = Child_Class_Self_choice)) +
+  facet_grid(cols = vars(factor(Years))) +
+  geom_boxplot() +
+  geom_jitter() +                                         
+    labs(
+      title = "Relation Between Children's Classroom Choice and Parents' Colorblind Score \nBy Child's Age",
+      x = "Child Classroom Choice",
+      y = "Parent Colorblindness Score (higher = more colorblind)",
+      color = "Child Age (Years)",
+      caption = "CB = colorblind and CC = color-conscious"
+    ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  coord_flip() +   
+  scale_color_manual(values = c("CB" = "#6baed6", "CC" = "#2171b5"))
 
-ggplot(AVCB_H2, aes(x = factor(Years), y = COBRAS_avg, color = Years)) +
-  facet_wrap(vars(Child_Class_Self_choice)) +
-  geom_boxplot() + labs(title = "Side-by-Side Box Plots") +
-  geom_jitter()
 
-#Take out NAs
-#Change colors
-#Rename labels
-#Change to simple theme
-#Give informative title
+p2a
+
+#Add age label/add "years"?
+
+#maybe better visualization?
+
+p2a_alt <- AVCB_H2 %>% filter(!is.na(Child_Class_Self_choice)) %>% 
+ggplot(aes(x = factor(Years), y = COBRAS_avg, color = Child_Class_Self_choice)) +
+  facet_grid(cols = vars(Child_Class_Self_choice)) +
+  geom_boxplot() +
+  geom_jitter() +                                         
+    labs(
+      title = "Relation Between Children's Classroom Choice and Parents' Colorblind Score \nBy Child's Age",
+      x = "Child Age (Years)",
+      y = "Parent Colorblindness Score (higher = more colorblind)",
+      color = "Child Age (Years)",
+      caption = "CB = colorblind and CC = color-conscious"
+    ) +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  coord_flip() +
+  scale_color_brewer(palette = "Dark2")
+
+p2a_alt
 
 ##For child binary/parent binary: 
 
 #Stacked barchart with child classroom choice (binary) on x axis with each bar broken down by parent classroom choice (binary)
+#Expect: Child CB bar = higher number of parents who chose CB classroom, Child CC bar = higher number of parents who chose CC classroom
 
-ggplot(AVCB_H2, aes(x = Child_Class_Self_choice, fill = Parent_Class_Self_choice)) +
-  geom_bar(position = "dodge") +
-  labs(title = "Grouped Bar Plot",
-       x = "Variable1",
-       y = "Count") +
-  scale_fill_manual(values = c("CB" = "blue", "CC" = "red"))  # Customize fill colors if needed
+p2b <- AVCB_H2 %>% filter(!is.na(Child_Class_Self_choice)) %>%  
+  ggplot(aes(x = Child_Class_Self_choice, fill = Parent_Class_Self_choice)) +
+  geom_bar(position = "fill") +
+  labs(title = "Child vs. Parent Classroom Choice",
+       x = "Child Classroom Choice",
+       y = "Count",
+      fill = "Parent Classroom Choice",
+      caption = "CB = colorblind and CC = color-conscious"
+    ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2")
 
-#Take out NAs
-#Change colors
-#Rename labels
-#Change to simple theme
-#Give informative title
 
-#Natalie Suggestion: ??? Forgot to ask during final project meeting
+p2b
 ```
 
-
+# **H3 Plot**
 ```{r H3 Plot, eval=TRUE, message = FALSE, warning= FALSE}
+AVCB_H3 <-read.csv("Data/AVCB_H3.csv")
+
 #H3: Higher authoritarian values will positively predict more colorblind attitudes.
     #For parents: Scatterplot with parent AV score on x axis, parent COBRA score on y axis
     #For kids: Barplot with child classroom choice (binary) on x axis and child AV score on y axis
     #Natalie's Suggestion: 2 Boxplots of parent AV score comparing kids who choose CC vs. kids who choose CB
       #But how do I add kids' age into this plot????
 
-#Transform AV scores + rename
-AVCB_H3 <- AVCB_H3 %>%
-  mutate(AV_sum = AV_sum / 4)
-
-names(AVCB_H3)[names(AVCB_H3) == "AV_sum"] <- "Parent_AVscore"
-
-
-AVCB_H3 <- AVCB_H3 %>%
-  mutate(Self_sum = Self_sum / 4)
-
-names(AVCB_H3)[names(AVCB_H3) == "Self_sum"] <- "Child_AVscore"
-
-
     #For parents: Scatterplot with parent AV score on x axis, parent COBRA score on y axis
+    #Expect: Positive relation between AV score amnd COBRA score
 
-ggplot(
+
+p3a <- ggplot(
   data = AVCB_H3,
   mapping = aes(x = Parent_AVscore, y = COBRAS_avg)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  geom_jitter()
+  geom_jitter() +
+    labs(
+      title = "Relation Between Parents' Authoritarian Values and Colorblindness Score",
+      x = "Authoritarian Values Score (higher = more authoritarian)",
+      y = "Colorblindness Score (higher = more colorblind)" 
+    ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Dark2")
+
+
+p3a
 
     #For kids: Barplot with child classroom choice (binary) on x axis and child AV score on y axis
+    #Expect: CB boxplot will be higher than CC boxplot
 
-ggplot(AVCB_H3, aes(x = Child_Class_Self_choice, y = Child_AVscore, color= Child_Class_Self_choice)) +
-  geom_boxplot() + labs(title = "Side-by-Side Box Plots") +
-  geom_jitter()
 
-#Take out NAs
-#Change colors
-#Rename labels
-#Change to simple theme
-#Give informative title
+p3b <- AVCB_H3 %>% filter(!is.na(Child_Class_Self_choice)) %>% 
+ggplot(aes(x = Child_Class_Self_choice, y = Child_AVscore, color = Child_Class_Self_choice)) +
+  geom_boxplot() +
+  geom_jitter()  +
+    labs(
+      title = "Relation Children's Classroom Choice and Authoritarian Values Score",
+      x = "Classroom Choice",
+      y = "Authoritarian Values Score (higher = more authoritarian)",
+      caption = "CB = colorblind and CC = color-conscious",
+      color = "Classroom Choice"
+    ) +
+  theme_minimal() +
+  scale_color_brewer(palette = "Dark2")
+
+
+p3b
 ```
 
+```{r}
+#Other ideas for plots
+
+#How are parents and children's values related?
+  #x = type of AV score (parent-actual, child, child parent perception), y = AV score
+    #barplot
+
+#How does child's values + perceptions of parents' values change with age? (facet - AV type: child AV, child perception of parent)
+  #x = Age (discrete), y = child AV
+    #scatterplot + smooth
+
+#How does parents AV relate to child perceptions of parents AV
+  #x = parent AV score, y = AV score (facet - child AV, child parent perception AV)
+    #scatterplot + smooth
+
+
+```
+
+```{r}
+#All plots
+p1
+p1_alt
+p2a
+p2a_alt
+p2b
+p3a
+p3b
+```
 
 
 # Methods

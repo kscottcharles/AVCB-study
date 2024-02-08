@@ -239,7 +239,7 @@ all.equal(sw.wranged_inprogress, sw.wrangled.goal)
 
 #I was just realized I didn't use one long pipe... hopefully that's okay for this assignment?
 
-#Update: nAfter seeing Natalie's script
+#Update: After seeing Natalie's script
 
 #filter out NAs in height columns
 sw.wranged_inprogress <- filter(sw.wranged_inprogress, !is.na(height_cm))
@@ -280,3 +280,107 @@ ggplot(data = sw.wrangled, aes(x = height_in, y = mass)) +
 
 #not sure how to get 100 not to show on the y axis
 
+##HW 12 (Part 1)
+
+#Plot 1
+  ggplot(sw.wrangled, aes(x = fct_infreq(hair), y = mass)) +
+    geom_boxplot(aes(fill = hair)) +
+    geom_point(position = "identity", size = 2.5) +
+    labs(
+      x = "Hair color(s)",
+      y = "Mass (kg)",
+      fill = "Colorful hair"  
+    ) +
+    scale_fill_discrete(
+      limits = levels(fct_infreq(sw.wrangled$hair))
+    ) +
+    scale_y_continuous(limits = c(0, 160),
+                       breaks = seq(0, 160, by = 40)
+    ) 
+
+
+#Plot 2
+  
+  sw.wrangled$brown_hair <- factor(sw.wrangled$brown_hair, levels = c(TRUE, FALSE))
+  
+  ggplot(
+    data = sw.wrangled,
+    mapping = aes(x = mass, y = height_in) 
+  ) + 
+    facet_wrap(vars(brown_hair),
+               labeller = labeller(brown_hair = c("TRUE" = "Has brown hair", "FALSE" = "No brown hair"))
+    ) +
+    geom_point() +
+    geom_smooth(method = "lm") +
+    geom_jitter() +
+    labs(
+      title = "Mass vs. height by brown-hair-havingness",
+      subtitle = "A critically important analysis"
+    ) +
+    scale_x_continuous(limits = c(-200, 200)) +
+    theme_minimal()
+
+
+
+#Plot 3
+
+  sw.wrangled_filtered <- sw.wrangled %>% filter(!is.na(factor(species)))
+  sw.wrangled_filtered <- sw.wrangled_filtered %>% mutate(species_first_letter = paste0(str_sub(species, 1, 1)))  
+  
+  ggplot(sw.wrangled_filtered, aes(x = species_first_letter, fill = gender)) +
+  geom_bar() +
+  coord_flip() +
+  labs(
+      caption = "A clear male human bias"
+  ) +
+  theme_classic() 
+  
+
+  ##HW 13 (Part 1)
+
+#mutate data
+  sw.wrangled_mutate <- sw.wrangled %>%
+    mutate(gender = recode(gender, "f" = "Female", "m" = "Male"))
+  
+  sw.wrangled_mutate$gender <- sw.wrangled_mutate$gender %>% replace_na("Other") #https://rdrr.io/cran/tidyr/man/replace_na.html
+  
+#start plotting
+
+  ggplot(
+    data = sw.wrangled_mutate,
+    mapping = aes(x = height_cm, y = mass, color = gender)) +
+    facet_wrap(~gender, scales = "free_y") +
+    geom_smooth(fill = "#CCCCFF", method = "lm") +
+    geom_jitter(alpha = .5) +
+    labs(
+      title = "Height and weight across gender presentation",
+      subtitle = "A cautionary tale in misleading \"free\" axis scales & bad design choices", #https://stat.ethz.ch/R-manual/R-devel/library/base/html/Quotes.html
+      x = "Height (cm)",
+      y = "Mass (kg)",
+      color = "Gender Presentation",
+      caption = "Color hint: Use the ggsci package!"
+    ) +
+    scale_x_continuous(limits = c(60, 270),
+                       breaks = seq(60, 270, by = 30)) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          axis.text.y = element_text(face="bold"),
+          text=element_text(family="Comic Sans MS"), #https://stackoverflow.com/questions/27689222/changing-fonts-for-graphs-in-r #for list of fonts: https://rpubs.com/vprabhuram/222833
+          panel.grid.minor = element_blank(), #https://environmentalcomputing.net/graphics/ggplot/ggplot-appearance/ and https://r-charts.com/ggplot2/grid/
+          panel.grid.major.x = element_line(linetype = "dashed", color = "white"), 
+          panel.grid.major.y = element_line(linetype = "dotdash", color = "grey"),
+          panel.background = element_rect(fill = "#FFEDEE"), #https://www.datanovia.com/en/blog/ggplot-themes-gallery/
+          strip.text = element_text(hjust = 0), #https://stackoverflow.com/questions/62009919/facet-title-alignment-using-facet-wrap-in-ggplot2 
+          strip.background = element_rect(
+            color = "black", fill="darkgreen", linetype="solid"), #https://www.datanovia.com/en/blog/how-to-change-ggplot-facet-labels/
+          strip.text.x = element_text(
+            color = "white"),
+          plot.caption  = element_text(angle = 180, hjust = 0, color = "red", face="bold"), #https://www.geeksforgeeks.org/ggplot2-title-and-subtitle-with-different-size-and-color-in-r/ #have to use hjust = 0 to go right this time bc flipped, usually would use hjust = 1 
+          panel.border = element_rect(color = "black", fill=NA), #https://stackoverflow.com/questions/26191833/add-panel-border-to-ggplot2 and https://stackoverflow.com/questions/28652284/how-to-change-color-of-facet-borders-when-using-facet-grid 
+          legend.title=element_text(family = "Brush Script MT", size = 16), #https://stackoverflow.com/questions/9639127/adjust-position-and-font-size-of-legend-title-in-ggplot2 
+          legend.position = "bottom", 
+          legend.background = element_blank(), #https://stackoverflow.com/questions/47584766/draw-a-box-around-a-legend-ggplot2 
+          legend.box.background = element_rect(fill = "#CCCCFF", color = "white")) +
+    scale_color_uchicago()
+  
+  
+  
