@@ -360,8 +360,9 @@ p3b
 
 
 ```
+In Figure \@ref(my plots), you can see XYZ.
 
-```{r}
+```{r my plots}
 #All plots
 p1
 p1_alt
@@ -370,6 +371,127 @@ p2a_alt
 p2b
 p3a
 p3b
+```
+
+```{r}
+#Dems I want in my table:
+  #Gender (kids)
+  #Race.Eth_group (kids)
+  #Income
+  #P1_pol
+  #P1_ed
+
+#Factor + Recode + Level for dem table
+AVCB_wp_dyads$Gender <- factor(AVCB_wp_dyads$Gender)
+levels(AVCB_wp_dyads$Gender)
+
+AVCB_wp_dyads$Race.Eth_group <- factor(AVCB_wp_dyads$Race.Eth_group)
+levels(AVCB_wp_dyads$Race.Eth_group)
+AVCB_wp_dyads$Race.Eth_group <- recode_factor(AVCB_wp_dyads$Race.Eth_group, "Hispanic or Latino"="Hispanic or Latino", "White or Caucasian"="White or Caucasian", "Black or African American"="Black or African American",.default = "Bi- or Multi-Racial" )
+
+AVCB_wp_dyads$Income <- factor(AVCB_wp_dyads$Income)
+levels(AVCB_wp_dyads$Income)
+AVCB_wp_dyads$Income <- factor(AVCB_wp_dyads$Income, levels = c("Less than $15,000", "$20,000 to $24,999", "$35,000 to $49,999","$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $149,999", "$150,000 or more", "Prefer not to answer", "N/A"))
+
+AVCB_wp_dyads$P1_pol <- factor(AVCB_wp_dyads$P1_pol)
+levels(AVCB_wp_dyads$P1_pol)
+AVCB_wp_dyads$P1_pol <- factor(AVCB_wp_dyads$P1_pol, levels = c("Extremely Conservative", "Conservative", "Slightly Conservative","Moderate, Middle of the Road", "Slightly Liberal", "Liberal", "Extremely Liberal", "Haven't thought much about it/I don't know", "Prefer not to answer"))
+
+AVCB_wp_dyads$P1_ed <- factor(AVCB_wp_dyads$P1_ed)
+levels(AVCB_wp_dyads$P1_ed)
+AVCB_wp_dyads$P1_ed <- recode_factor(AVCB_wp_dyads$P1_ed, "Associate's Degree or equivalent 2-year degree"="Associate's Degree or equivalent 2-year degree", "At least one year college"="At least one year of college", "At least one year in college"="At least one year of college","Bachelor's Degree or equivalent 4-year undergraduate degree" = "Bachelor's Degree or equivalent 4-year undergraduate degree", "Graduate Degree"="Graduate Degree", "High School or GED"="High School or GED", "Some graduate training (not completed)"="Some graduate training (not completed)" )
+
+AVCB_wp_dyads$P1_ed <- factor(AVCB_wp_dyads$P1_ed, levels = c("High School or GED", "At least one year of college", "Associate's Degree or equivalent 2-year degree","Bachelor's Degree or equivalent 4-year undergraduate degree", "Some graduate training (not completed)", "Graduate Degree"))
+```
+
+In Table \@ref(my_table_chunk), we can see the summary of parents' education levels.
+
+```{r dem table}
+library(knitr)
+library(kableExtra)
+
+#Gender table
+AVCB_wp_dyads$Gender
+
+gender_table <- AVCB_wp_dyads %>% filter(!is.na(Gender)) %>%
+  group_by(Gender) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion = round(count / sum(count), 2)) %>%
+  rename(`Children's Gender` = Gender, N = count, P = proportion)
+gender_table
+
+kable(gender_table)
+
+#Race.Eth_group table
+
+race_table <- AVCB_wp_dyads %>% filter(!is.na(Race.Eth_group)) %>%
+  group_by(Race.Eth_group) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion = round(count / sum(count), 2)) %>%
+  rename(`Children's Race/Ethnicity` = Race.Eth_group, N = count, P = proportion)
+race_table
+
+kable(race_table)
+
+#Income table
+
+income_table <- AVCB_wp_dyads %>% filter(!is.na(Income)) %>%
+  group_by(Income) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion = round(count / sum(count), 2)) %>%
+  rename(`Parents' Yearly Household Income` = Income, N = count, P = proportion)
+income_table
+
+kable(income_table)
+
+
+#P1_pol
+
+pol_table <- AVCB_wp_dyads %>% filter(!is.na(P1_pol)) %>%
+  group_by(P1_pol) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion = round(count / sum(count), 2)) %>%
+  rename(`Parents' Political Orientation` = P1_pol, N = count, P = proportion)
+pol_table
+
+kable(pol_table)
+
+#P1_ed
+
+ed_table <- AVCB_wp_dyads %>% filter(!is.na(P1_ed)) %>%
+  group_by(P1_ed) %>% 
+  summarise(count = n()) %>% 
+  mutate(proportion = round(count / sum(count), 2)) %>%
+  rename(`Parents' Education Level` = P1_ed, N = count, P = proportion) 
+ed_table
+
+kable(ed_table)
+
+#Merge all together
+
+kable_table1 <- kableExtra::kbl(gender_table, format = "html") %>%
+  kableExtra::kable_styling(position = "left", full_width = T)
+
+kable_table2 <- kableExtra::kbl(race_table, format = "html") %>%
+  kableExtra::kable_styling(position = "left", full_width = T)
+
+kable_table3 <- kableExtra::kbl(income_table, format = "html") %>%
+  kableExtra::kable_styling(position = "left", full_width = T)
+
+kable_table4 <- kableExtra::kbl(pol_table, format = "html") %>%
+  kableExtra::kable_styling(position = "left", full_width = T)
+
+kable_table5 <- kableExtra::kbl(ed_table, format = "html") %>%
+  kableExtra::kable_styling(position = "left", full_width = T)
+
+# Combine tables vertically using HTML tags
+combined_tables <- paste0(kable_table1, kable_table2, kable_table3, kable_table4, kable_table5)
+
+# Save the combined tables to an HTML file or display in R Markdown
+cat(combined_tables, file = "combined_tables.html")
+
+#I can't figure out how to do more than this 
+
 ```
 
 
