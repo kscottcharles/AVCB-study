@@ -494,6 +494,58 @@ cat(combined_tables, file = "combined_tables.html")
 
 ```
 
+```{r analyses-descriptives}
+
+# Load necessary libraries
+library(tidyverse)
+library(psych)
+library(stats)
+library(lme4)
+library(scales)
+
+#descriptive statistics - correlation matrix
+
+#AVCB_wp_dyads_corr <- AVCB_wp_dyads |> 
+  #select(Family_ID, COBRAS_avg, CB_Self_Rating_CB_num, CB_Self_Rating_CC_num, CB_Teacher_Rating_CB_num, CB_Teacher_Rating_CC_num, Responsibility_Parents_avg, Responsibility_Schools_avg, Responsibility_Racism_avg,Responsibility_DEI_avg, Self_sum, AV_sum)
+
+AVCB_wp_dyads_corr <- AVCB_wp_dyads |> 
+  select(COBRAS_avg, CB_Self_Rating_CB_num, CB_Self_Rating_CC_num, Responsibility_Parents_avg, Responsibility_Schools_avg, Responsibility_Racism_avg,Responsibility_DEI_avg, Self_sum, AV_sum)
+
+
+AVCB_wp_dyads_corr <- AVCB_wp_dyads_corr %>%
+  mutate(AV_sum = AV_sum / 4)
+
+names(AVCB_wp_dyads_corr)[names(AVCB_wp_dyads_corr) == "AV_sum"] <- "Parent_AVscore"
+
+
+AVCB_wp_dyads_corr <- AVCB_wp_dyads_corr %>%
+  mutate(Self_sum = Self_sum / 4)
+
+names(AVCB_wp_dyads_corr)[names(AVCB_wp_dyads_corr) == "Self_sum"] <- "Child_AVscore"
+
+
+
+AVCB_wp_dyads_corr <- cor(AVCB_wp_dyads_corr, use = "complete.obs") # using a matrix-like object (e.g., df)
+AVCB_wp_dyads_corr
+
+```
+
+```{r analyses-hypothesis tests}
+
+#hypothesis test - doing just 1 for now
+
+#H3: Higher authoritarian values will positively predict more colorblind attitudes (among parents)
+#AV_sum --> CB_self_choice (classroom choice)
+#Not sure if I should use AV_sum or AV_score for this
+#use t-test (comparing difference in means for AV_sum across CB_Self_choice)
+
+#self
+aggregate(x= AVCB_wp_parents$AV_sum,     # Numeric variable to be aggregated (mean calculated)
+         by = list(AVCB_wp_parents$CB_Self_choice), # Grouping variable
+         FUN = mean, na.rm=TRUE) # Function to apply (mean in this case) + Remove NA values during aggregation
+
+t.test(AV_sum ~ CB_Self_choice, data = AVCB_wp_parents)
+```
 
 # Methods
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
