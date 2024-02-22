@@ -43,7 +43,7 @@ abstract: |
 keywords          : "keywords"
 wordcount         : "X"
 
-bibliography      : "r-references.bib"
+bibliography      : "AVCB_references.bib"
 
 floatsintext      : no
 linenumbers       : yes
@@ -73,570 +73,71 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```{r}
 #load packages
 
-library(dplyr)
 library(tidyverse)
-library(readr)
+library(dplyr)
+library(tidyr)
 library(ggplot2)
+library(ggthemes)
+library(readr)
+library(knitr)
+library(kableExtra)
+library(psych)
+library(stats)
+library(lme4)
+library(scales)
 
 ```
 
-```{r load data, include=FALSE}
-AVCB_wp_kids <- read.csv("Data/AVCB_wp_kids.csv", na.strings = c("", "NA", "#N/A"))
-AVCB_wp_parents <- read.csv("Data/AVCB_wp_parents.csv", na.strings = "")
+```{r import data}
+source("Scripts/AVCB_data-prep.R")
+
 
 ```
-
-```{r combine files, include=FALSE}
-#combine files
-AVCB_wp_dyads <- merge(AVCB_wp_kids, AVCB_wp_parents, by = "Family_ID")
-
-#renaming variables
-AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Single Child ID" = "ID.x")
-AVCB_wp_dyads <- rename(AVCB_wp_dyads, "All Child IDs" = "ID.y")
-AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Child Version" = "Version.x")
-AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Parent Version" = "Version.y")
-AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Child_CB_Self_choice" = "CB_Self_choice.x")
-AVCB_wp_dyads <- rename(AVCB_wp_dyads, "Parent_CB_Self_choice" = "CB_Self_choice.y")
-
-```
-
-```{r create intermediate dataset, include=FALSE}
-#Checking column names before creating ID
-print(names(AVCB_wp_dyads))
-
-AVCB_wp_dyads_ID <- AVCB_wp_dyads |> 
-  select(Family_ID:Gender, P1_Race.Eth, P2_Race.Eth, P1_pol:P2_ed, Child_CB_Self_choice, CB_Parents_choice, RE_Ind_Self_choice:Parent_sum, RE_Ind:WB_Cons,COBRAS_1_num:AV_sum)
-
-#moving AV choice variables tgo right before AV num variables (for parents) - will want to rename these later so that it's clear which ones are kid vs. parent variables
-
-AVCB_wp_dyads_ID <- AVCB_wp_dyads_ID |> 
-  relocate(RE_Ind:WB_Cons, .before = RE_Ind_num)
-
-AVCB_wp_dyads_ID
-
-#Checking column names
-print(names(AVCB_wp_dyads_ID))
-
-```
-
-```{r save intermediate dataset, include=FALSE}
-write_csv(AVCB_wp_dyads_ID, "AVCB_wp_dyads_ID.csv")
-
-```
-
-# **Heading 1 (bolded)**  
-xyz
-
-## *Heading 2 (italicized)*  
-xyz
-
-### Heading 3  
-xyz  
-
-# Starting Lists from HW5
-
-**Unordered list**
-
-* This is the first line in my unordered list
-* Here is another line in the list
-    + This is an indented line
-* Here is another line in the unordered list
-
-
-**Ordered List**  
-
-1. First line
-2. Second line
-3. Third line
-    + Item 3a
-    + Item 3b
-
-
-
-**Here, I am inserting a url**  
-[This is a link to the RStudio website](https://www.rstudio.com)
 
 <!-- This is my HTML-style comment. I can see this, but it won't show up when I knit the document -->
 
+These are my plots. In Figure \@ref(my plots), you can see XYZ.
 
-```{r call-function, echo=FALSE}
-#Assignment 5 - call function
-#source("functions.R")
-#hello_world("Kaila")
+```{r Plots, eval=TRUE, include=TRUE}
+source("Scripts/AVCB_plots.R")
 
-```
-# **Mock up 2 plots (of 2 different types) you could include in your final report**
-
-# **H1 Plot**
-```{r H1 Plot, eval=TRUE, include=TRUE}
-#H1: Parents’ authoritarian values will positively predict children’s own authoritarian values and this relation will strengthen with age.    
-    
-#Scatterplot with parent AV score on x axis, child AV score on y axis  + smooth line with age plotted in different colors 
-#Expect: Positive relation between Parent AV score and Child AV score (stronger positive relation with age)
-
-AVCB_H1 <-read.csv("Data/AVCB_H1.csv")
-
-AVCB_H1$Years <- factor(AVCB_H1$Years)
-
-p1 <- ggplot(
-  data = AVCB_H1,
-  mapping = aes(x = Parent_AVscore, y = Child_AVscore, color = factor(Years))) +
-  geom_smooth(method = "lm") +
-  geom_jitter() +
-    labs(
-      title = "Relation Between Parents' and Children's Authoritarian Values",
-      x = "Parent Authoritarian Values Score (higher = more authoritarian)",
-      y = "Child Authoritarian Values Score (higher = more authoritarian)",
-      color = "Child Age (Years)"  
-    ) +
-  theme_classic() +
-  scale_color_brewer(palette = "Blues")
-
-
-p1
-
-#maybe better way to visualize?
-
-p1_alt <- AVCB_H1 %>% 
-ggplot(aes(x = Parent_AVscore, y = Child_AVscore, color = factor(Years))) +
-  facet_grid(cols = vars(Years),
-               labeller = labeller(Years = c("6" = "6 years", "7" = "7 years", "8" = "8 years", "9" = "9 years", "10" = "10 years"))) +
-  geom_jitter() +
-  geom_smooth(method = "lm") +
-  labs(title = "Side-by-Side Box Plots") +
-    labs(
-      title = "Relation Between Parents' and Children's Authoritarian Values By Child's Age",
-      x = "Parent Authoritarian Values Score (higher = more authoritarian)",
-      y = "Child Authoritarian Values Score (higher = more authoritarian)",
-      color = "Child Age (Years)"
-    ) +
-  theme_classic() +
-  theme(legend.position = "bottom") +
-  scale_color_brewer(palette = "Dark2")
-
-p1_alt
-
-p1_noAge <- ggplot(
-  data = AVCB_H1,
-  mapping = aes(x = Parent_AVscore, y = Child_AVscore)) +
-  geom_smooth(method = "lm") +
-  geom_jitter() +
-    labs(
-      title = "Relation Between Parents' and Children's Authoritarian Values",
-      x = "Parent Authoritarian Values Score (higher = more authoritarian)",
-      y = "Child Authoritarian Values Score (higher = more authoritarian)"
-    ) +
-  theme_classic()
-
-p1_noAge
-
-```
-
-# **H2 Plot**
-This hypothesis has 2 ways to test the question. This is because we tested kids' diversity ideology one way (binary choice), but we tested parents' diversity ideology two ways: 1) same binary choice measure, 2) A continuous scale measure. I will create a plot for both ways.
-```{r H2 Plot, eval=TRUE, message = FALSE, warning=FALSE}
-#H2: Parents’ diversity ideology will positively predict children’s own diversity ideology, and this relation will strengthen with age.   
-
-AVCB_H2 <-read.csv("Data/AVCB_H2.csv")
-    
-##For child binary/parent continuous: 
-
-#Two Boxplots of parent COBRA score comparing kids who choose CC vs. kids who choose CB 
-#Expect: CB boxplots to be higher than CC box plots (and for this to strengthen with age)
-
-AVCB_H2$Years <- factor(AVCB_H2$Years)
-  
-p2a <- AVCB_H2 %>% filter(!is.na(Child_Class_Self_choice)) %>% 
-ggplot(aes(x = Child_Class_Self_choice, y = COBRAS_avg, fill = Child_Class_Self_choice)) +
-  facet_grid(cols = vars(Years),
-               labeller = labeller(Years = c("6" = "6 years", "7" = "7 years", "8" = "8 years", "9" = "9 years", "10" = "10 years"))) +
-  geom_boxplot() +
-  geom_jitter() +                                         
-    labs(
-      title = "Relation Between Children's Classroom Choice and Parents' Colorblind Score \nBy Child's Age",
-      x = "Child Classroom Choice",
-      y = "Parent Colorblindness Score (higher = more colorblind)",
-      color = "Child Age (Years)",
-      caption = "CB = colorblind and CC = color-conscious"
-    ) +
-  theme_classic() +
-  theme(legend.position = "none") +
-  coord_flip() +   
-  scale_fill_manual(values = c("CB" = "#6baed6", "CC" = "#2171b5"))
-
-
-p2a
-
-#maybe better visualization?
-
-p2a_alt <- AVCB_H2 %>% filter(!is.na(Child_Class_Self_choice)) %>% 
-ggplot(aes(x = factor(Years), y = COBRAS_avg, fill = Child_Class_Self_choice)) +
-  facet_grid(cols = vars(Child_Class_Self_choice),
-               labeller = labeller(Child_Class_Self_choice = c("CB" = "Child Picked Colorblind Class", "CC" = "Child Picked Color-Conscious Class"))) +
-  geom_boxplot() +
-  geom_jitter() +                                         
-    labs(
-      title = "Relation Between Children's Classroom Choice and Parents' Colorblind Score \nBy Child's Age",
-      x = "Child Age (Years)",
-      y = "Parent Colorblindness Score (higher = more colorblind)",
-      color = "Child Age (Years)"
-    ) +
-  theme_classic() +
-  theme(legend.position = "none") +
-  coord_flip() +
-  scale_fill_brewer(palette = "Dark2")
-
-p2a_alt
-
-##For child binary/parent binary: 
-
-#Stacked barchart with child classroom choice (binary) on x axis with each bar broken down by parent classroom choice (binary)
-#Expect: Child CB bar = higher number of parents who chose CB classroom, Child CC bar = higher number of parents who chose CC classroom
-
-p2b <- AVCB_H2 %>% filter(!is.na(Child_Class_Self_choice)) %>%  
-  ggplot(aes(x = Child_Class_Self_choice, fill = Parent_Class_Self_choice)) +
-  geom_bar(position = "fill") +
-  labs(title = "Child vs. Parent Classroom Choice",
-       x = "Child Classroom Choice",
-       y = "Count",
-      fill = "Parent Classroom Choice",
-      caption = "CB = colorblind and CC = color-conscious"
-    ) +
-  theme_classic() +
-  scale_fill_brewer(palette = "Dark2")
-
-
-p2b
-```
-
-# **H3 Plot**
-```{r H3 Plot, eval=TRUE, message = FALSE, warning= FALSE}
-AVCB_H3 <-read.csv("Data/AVCB_H3.csv")
-
-#H3: Higher authoritarian values will positively predict more colorblind attitudes.
-    #For parents: Scatterplot with parent AV score on x axis, parent COBRA score on y axis
-    #For kids: Barplot with child classroom choice (binary) on x axis and child AV score on y axis
-    #Natalie's Suggestion: 2 Boxplots of parent AV score comparing kids who choose CC vs. kids who choose CB
-      #But how do I add kids' age into this plot????
-
-    #For parents: Scatterplot with parent AV score on x axis, parent COBRA score on y axis
-    #Expect: Positive relation between AV score amnd COBRA score
-
-
-p3a <- ggplot(
-  data = AVCB_H3,
-  mapping = aes(x = Parent_AVscore, y = COBRAS_avg)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  geom_jitter() +
-    labs(
-      title = "Relation Between Parents' Authoritarian Values and Colorblindness Score",
-      x = "Authoritarian Values Score (higher = more authoritarian)",
-      y = "Colorblindness Score (higher = more colorblind)" 
-    ) +
-  theme_classic() 
-
-p3a
-
-    #For kids: Barplot with child classroom choice (binary) on x axis and child AV score on y axis
-    #Expect: CB boxplot will be higher than CC boxplot
-
-
-p3b <- AVCB_H3 %>% filter(!is.na(Child_Class_Self_choice)) %>% 
-ggplot(aes(x = Child_Class_Self_choice, y = Child_AVscore, fill = Child_Class_Self_choice)) +
-  geom_boxplot(show.legend = FALSE) +
-  geom_jitter(show.legend = FALSE)  +
-    labs(
-      title = "Relation Between Children's Classroom Choice and Authoritarian Values Score",
-      x = "Classroom Choice",
-      y = "Authoritarian Values Score (higher = more authoritarian)",
-      caption = "CB = colorblind and CC = color-conscious",
-      color = "Classroom Choice"
-    ) +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Dark2") +
-  scale_x_discrete(labels=c('Colorblind', 'Color-conscious'))
-
-
-p3b
-```
-
-```{r}
-#Other ideas for plots
-
-#How are parents and children's values related?
-  #x = type of AV score (parent-actual, child, child parent perception), y = AV score
-    #barplot
-
-#How does child's values + perceptions of parents' values change with age? (facet - AV type: child AV, child perception of parent)
-  #x = Age (discrete), y = child AV
-    #scatterplot + smooth
-
-#How does parents AV relate to child perceptions of parents AV
-  #x = parent AV score, y = AV score (facet - child AV, child parent perception AV)
-    #scatterplot + smooth
-
-
-```
-In Figure \@ref(my plots), you can see XYZ.
-
-```{r my plots}
-#All plots
-p1_noAge
-p1_alt
-p2a_alt
-p2b
-p3a
-p3b
-```
-
-```{r}
-#Dems I want in my table:
-  #Gender (kids)
-  #Race.Eth_group (kids)
-  #Income
-  #P1_pol
-  #P1_ed
-
-#Factor + Recode + Level for dem table
-AVCB_wp_dyads$Gender <- factor(AVCB_wp_dyads$Gender)
-levels(AVCB_wp_dyads$Gender)
-
-AVCB_wp_dyads$Race.Eth_group <- factor(AVCB_wp_dyads$Race.Eth_group)
-levels(AVCB_wp_dyads$Race.Eth_group)
-AVCB_wp_dyads$Race.Eth_group <- recode_factor(AVCB_wp_dyads$Race.Eth_group, "Hispanic or Latino"="Hispanic or Latino", "White or Caucasian"="White or Caucasian", "Black or African American"="Black or African American",.default = "Bi- or Multi-Racial" )
-
-AVCB_wp_dyads$Income <- factor(AVCB_wp_dyads$Income)
-levels(AVCB_wp_dyads$Income)
-AVCB_wp_dyads$Income <- factor(AVCB_wp_dyads$Income, levels = c("Less than $15,000", "$20,000 to $24,999", "$35,000 to $49,999","$50,000 to $74,999", "$75,000 to $99,999", "$100,000 to $149,999", "$150,000 or more", "Prefer not to answer", "N/A"))
-
-AVCB_wp_dyads$P1_pol <- factor(AVCB_wp_dyads$P1_pol)
-levels(AVCB_wp_dyads$P1_pol)
-AVCB_wp_dyads$P1_pol <- factor(AVCB_wp_dyads$P1_pol, levels = c("Extremely Conservative", "Conservative", "Slightly Conservative","Moderate, Middle of the Road", "Slightly Liberal", "Liberal", "Extremely Liberal", "Haven't thought much about it/I don't know", "Prefer not to answer"))
-
-AVCB_wp_dyads$P1_ed <- factor(AVCB_wp_dyads$P1_ed)
-levels(AVCB_wp_dyads$P1_ed)
-AVCB_wp_dyads$P1_ed <- recode_factor(AVCB_wp_dyads$P1_ed, "Associate's Degree or equivalent 2-year degree"="Associate's Degree or equivalent 2-year degree", "At least one year college"="At least one year of college", "At least one year in college"="At least one year of college","Bachelor's Degree or equivalent 4-year undergraduate degree" = "Bachelor's Degree or equivalent 4-year undergraduate degree", "Graduate Degree"="Graduate Degree", "High School or GED"="High School or GED", "Some graduate training (not completed)"="Some graduate training (not completed)" )
-
-AVCB_wp_dyads$P1_ed <- factor(AVCB_wp_dyads$P1_ed, levels = c("High School or GED", "At least one year of college", "Associate's Degree or equivalent 2-year degree","Bachelor's Degree or equivalent 4-year undergraduate degree", "Some graduate training (not completed)", "Graduate Degree"))
 ```
 
 In Table \@ref(r dem table), we can see the summary of parents' education levels.
 
 ```{r dem table}
-library(knitr)
-library(kableExtra)
-
-#Gender table
-AVCB_wp_dyads$Gender
-
-gender_table <- AVCB_wp_dyads %>% filter(!is.na(Gender)) %>%
-  group_by(Gender) %>% 
-  summarise(count = n()) %>% 
-  mutate(proportion = round(count / sum(count), 2)) %>%
-  rename(`Children's Gender` = Gender, N = count, P = proportion)
-gender_table
-
-kable(gender_table)
-
-#Race.Eth_group table
-
-race_table <- AVCB_wp_dyads %>% filter(!is.na(Race.Eth_group)) %>%
-  group_by(Race.Eth_group) %>% 
-  summarise(count = n()) %>% 
-  mutate(proportion = round(count / sum(count), 2)) %>%
-  rename(`Children's Race/Ethnicity` = Race.Eth_group, N = count, P = proportion)
-race_table
-
-kable(race_table)
-
-#Income table
-
-income_table <- AVCB_wp_dyads %>% filter(!is.na(Income)) %>%
-  group_by(Income) %>% 
-  summarise(count = n()) %>% 
-  mutate(proportion = round(count / sum(count), 2)) %>%
-  rename(`Parents' Yearly Household Income` = Income, N = count, P = proportion)
-income_table
-
-kable(income_table)
-
-
-#P1_pol
-
-pol_table <- AVCB_wp_dyads %>% filter(!is.na(P1_pol)) %>%
-  group_by(P1_pol) %>% 
-  summarise(count = n()) %>% 
-  mutate(proportion = round(count / sum(count), 2)) %>%
-  rename(`Parents' Political Orientation` = P1_pol, N = count, P = proportion)
-pol_table
-
-kable(pol_table)
-
-#P1_ed
-
-ed_table <- AVCB_wp_dyads %>% filter(!is.na(P1_ed)) %>%
-  group_by(P1_ed) %>% 
-  summarise(count = n()) %>% 
-  mutate(proportion = round(count / sum(count), 2)) %>%
-  rename(`Parents' Education Level` = P1_ed, N = count, P = proportion) 
-ed_table
-
-kable(ed_table)
-
-#Merge all together
-
-kable_table1 <- kableExtra::kbl(gender_table, format = "html") %>%
-  kableExtra::kable_styling(position = "left", full_width = T)
-
-kable_table2 <- kableExtra::kbl(race_table, format = "html") %>%
-  kableExtra::kable_styling(position = "left", full_width = T)
-
-kable_table3 <- kableExtra::kbl(income_table, format = "html") %>%
-  kableExtra::kable_styling(position = "left", full_width = T)
-
-kable_table4 <- kableExtra::kbl(pol_table, format = "html") %>%
-  kableExtra::kable_styling(position = "left", full_width = T)
-
-kable_table5 <- kableExtra::kbl(ed_table, format = "html") %>%
-  kableExtra::kable_styling(position = "left", full_width = T)
-
-# Combine tables vertically using HTML tags
-combined_tables <- paste0(kable_table1, kable_table2, kable_table3, kable_table4, kable_table5)
-
-# Save the combined tables to an HTML file or display in R Markdown
-cat(combined_tables, file = "combined_tables.html")
-
-#I can't figure out how to do more than this 
+source("Scripts/AVCB_tables.R")
 
 ```
 
 ```{r analyses-descriptives}
-#For Assignment 16
-# Load necessary libraries
+#source("Scripts/AVCB_analyses.R")
+#sum_glmer_cAVpAV 
 
-#descriptive statistics - correlation matrix
-
-#AVCB_wp_dyads_corr <- AVCB_wp_dyads |> 
-  #select(Family_ID, COBRAS_avg, CB_Self_Rating_CB_num, CB_Self_Rating_CC_num, CB_Teacher_Rating_CB_num, CB_Teacher_Rating_CC_num, Responsibility_Parents_avg, Responsibility_Schools_avg, Responsibility_Racism_avg,Responsibility_DEI_avg, Self_sum, AV_sum)
-
-AVCB_wp_dyads_corr <- AVCB_wp_dyads |> 
-  select(COBRAS_avg, CB_Self_Rating_CB_num, CB_Self_Rating_CC_num, Responsibility_Parents_avg, Responsibility_Schools_avg, Responsibility_Racism_avg,Responsibility_DEI_avg, Self_sum, AV_sum)
-
-#Creating AV scores
-AVCB_wp_dyads_corr <- AVCB_wp_dyads_corr %>%
-  mutate(AV_sum = AV_sum / 4)
-
-names(AVCB_wp_dyads_corr)[names(AVCB_wp_dyads_corr) == "AV_sum"] <- "Parent_AVscore"
-
-
-AVCB_wp_dyads_corr <- AVCB_wp_dyads_corr %>%
-  mutate(Self_sum = Self_sum / 4)
-
-names(AVCB_wp_dyads_corr)[names(AVCB_wp_dyads_corr) == "Self_sum"] <- "Child_AVscore"
-
-#Creating the correlation matrix
-AVCB_wp_dyads_corr <- cor(AVCB_wp_dyads_corr, use = "complete.obs") # using a matrix-like object (e.g., df)
-AVCB_wp_dyads_corr
 
 ```
 
 ```{r analyses-hypothesis tests}
+#source("Scripts/AVCB_analyses.R")
 
-#hypothesis tests
-
-#From Pre-reg:
-
-######Prelims
-
-#Parent Diversity ideology:
-  #Create difference scores: Teacher_dif and Self_dif (CB-CC; lower scores = more color-conscious)
-  #Look at relations between Teacher and Self classroom choice (binary) and Teacher_dif and Self_dif
-
-#generalized linear model: 
-
-
-######Rel between parent measures
-
-  ##Rel between diversity ideology measures - NEED TO MAKE PLOT FOR THESE
-  #Look at relations between COBRAS and Teacher_dif and Self_dif + COBRAS and Teacher and Self classroom choice (binary)
-
-#Logistic regression model:
-#Linear regression model:
-
-
-  ##Rel between parent diversity ideology measures and AV measure - P3A
-
-#Parent AV + Teacher and Self classroom choice (binary) - NEED TO MAKE PLOT FOR THIS
-  #generalized linear mixed effects model:
-  #We will include response to the teacher measure as the outcome and as predictors: question perspective (Parent-actual, Teacher) and parents’ authoritarian values (and additionally examining the interaction between these factors). 
-
-#Parent AV + COBRAS 
-
-#check cor first
-AVCB_H3_no_missing <- na.omit(AVCB_H3[, c("Parent_AVscore", "COBRAS_avg")])
-cor.test(AVCB_H3_no_missing$Parent_AVscore, AVCB_H3_no_missing$COBRAS_avg)
-
-#Linear regression model
-
-pAV_pCOBRAS_lm <- lm(Parent_AVscore ~ COBRAS_avg, data = AVCB_H3)
-summary(pAV_pCOBRAS_lm)
-
-
-######Rel between child measures
-
-  ##Rel between diversity ideology and AV
-
-#Parent-perception (binary) and AV - NEED TO MAKE PLOT FOR THIS (ONLY MADE FOR SELF CLASSROOM CHOICE)
-  #Logistic regression model:
-  #choice on the Teacher measure as the outcome and authoritarian values as the predictor
-
-#Self classroom choice (binary) and AV - P3B
-  #Logistic regression model:
-  #choice on the Teacher measure as the outcome and authoritarian values as the predictor
-
-
-#Including both in model - will need data in long format?
-  #Generalized linear mixed effects model with a random intercept for each participant
-    #Outcome: Response to classroom measure
-    #Predictors: question perspective (Self, Parent-perception), children’s own authoritarian values, their perception of parents’ authoritarian values (additionally examining relation between these variables).
-    #Side note: We predict that children’s own authoritarian values will relate to their own racial ideology (we do not have strong predictions about the relation between children’s perceptions of parents’ authoritarian values and their perceptions of parents’ racial ideology). 
-
-
-######Rel between parent and child measures
-#Parent AV and children's AV - p1_noAge (only uses SELF AV for both; need to create another for parent-perception)
-  #generalized linear mixed effects model with a random intercept for each dyad
-  #Outcome: children’s authoritarian values as the outcome
-  #Predictors: question perspective (Self, Parent-perception) and parents’ authoritarian values (additionally examining the interaction between these factors).
-
-#Parent diversity ideology and children's diversity ideologies - dont have a graph made
-  #generalized linear mixed effects model with a random intercept for each dyad
-  #Outcome: children’s response to the classroom measure
-  #Predictors: question perspective (Self, Parent-perception), parent CoBRAS, parents’ response to the classroom measure (separately for Teacher and Parent-actual), and additionally examining interactions between these factors). 
-
-
-
-
-###########################################################
-#For Assignment 16
-#H3: Higher authoritarian values will positively predict more colorblind attitudes (among parents)
-#AV_sum --> CB_self_choice (classroom choice)
-#Not sure if I should use AV_sum or AV_score for this
-#use t-test (comparing difference in means for AV_sum across CB_Self_choice)
-
-#self
-#aggregate(x= AVCB_wp_parents$AV_sum,     # Numeric variable to be aggregated (mean calculated)
-         #by = list(AVCB_wp_parents$CB_Self_choice), # Grouping variable
-         #FUN = mean, na.rm=TRUE) # Function to apply (mean in this case) + Remove NA values during aggregation
-
-#t.test(AV_sum ~ CB_Self_choice, data = AVCB_wp_parents)
-
-# Check if "Parent_AVscore" is present in the coefficients
 
 ```
 The correlation between parents' authoritarian values score and COBRAS score shows that there is some positive association: as parents' authoritarian values score increases, their COBRAS score increases too (and this effect was significant).
 
-The linear model shows that for every additional point of parents' authoritarian values score, parents' COBRAS score increases by `r coefficients(pAV_pCOBRAS_lm)[["COBRAS_avg"]]` points, and this effect is significant `pAV_pCOBRAS_lm$p.value`.
+
+^Having trouble
+
+
+
+Adults hold strong social and political values that guide their behaviors in the world. How are these values transferred across generations? In the proposed project, we investigate how parents’ and children’s authoritarian values—those placed on authority, order, and conformity—shape the socialization of racial ideology among racially diverse (Black, White, Latinx, Asian) parent-child dyads, and among families in more versus less diverse environments. 
+  
+  Authoritarian values have long garnered attention given their relations to social-group-based attitudes including outgroup prejudice, policy preferences, and attitudes toward societal change [@stenner2005authoritarian; @xhetherington2009authoritarianism]. Traditional accounts posit that authoritarian values only emerge in early adulthood [@altemeyer1998other].  Challenging this perspective, our lab created a novel measure of children’s authoritarian values and demonstrated that parents’ and children’s authoritarian values are correlated as early as age 6, suggesting the roots of these values may be present earlier in life than previously believed.  
+  
+  This finding raises questions about how early-life authoritarian values shape children’s other developing ideologies. One place authoritarian values may manifest is in ideologies related to talking about race. Two prominent racial ideologies are colorblindness and color-consciousness [@rattan2013diversity].  Colorblindness is rooted in the belief that race does not matter and should not be considered when making decisions, forming impressions, or navigating the world. Conversely, color-consciousness celebrates racial differences and uniqueness, while recognizing that race and ethnicity impact access to opportunities [@apfelbaum2012racial].  We hypothesize that parents’ authoritarian values may predict parents’ racial socialization practices, and that parents’ and children’s authoritarian values may predict parent-child dyads’ attitudes about how to talk about race (i.e., colorblind vs. color-conscious attitudes). 
+  
+  We further predict that the nature of this relation may differ among parent-child dyads with different racial identities, and among dyads living in more vs. less diverse environments. We make this prediction for two main reasons. First, recent studies provide preliminary evidence that authoritarian values may measure different constructs among Black and White adults.  Second, prior research indicates that racial ideologies vary across parents from different racial groups. Specifically, White American adults endorse colorblind attitudes more than adults from American minority groups,  which is reflected in White parents’ higher likelihood of engaging in socialization practices that de-emphasize the importance of race. ,  For these reasons, we predict that authoritarian values may be more strongly predictive of colorblind attitudes among White parent-child dyads than among parent-child dyads from American minority groups. 
+  
+  The above predictions extend research on racial socialization by examining the mechanisms through which parents transmit values and ideologies to their children. There is a large body of literature documenting parents’ racial and ethnic socialization practices. However, much less is known about the roots of children’s own racial ideologies, or about how other ideologies (e.g., authoritarian values) might contribute to racial socialization practices. By examining parents’ and children’s attitudes in parallel, we aim to provide novel insight into the transmission and development of socio-political attitudes and racial ideologies. 
 
 
 
