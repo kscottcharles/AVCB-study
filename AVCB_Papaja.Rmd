@@ -1,29 +1,37 @@
 ---
-title             : "Authoritarian Values and Colorblindness"
-shorttitle        : "AVCB"
+title             : "Investigating the Influence of Authoritarian Values on the Development of Diversity Ideologies"
+shorttitle        : "Authoritarian Values and Colorblindness"
 
 author: 
   - name          : "Kaila Scott-Charles"
     affiliation   : "1"
     corresponding : yes    # Define only one corresponding author
-    address       : "Postal address"
-    email         : "my@email.com"
-    role: # Contributorship roles (e.g., CRediT, https://credit.niso.org/)
+    address       : "5848 South University Avenue, Chicago, IL, 60615"
+    email         : "kscottcharles@uchicago.edu"
+    role:
       - "Conceptualization"
       - "Writing - Original Draft Preparation" 
       - "Writing - Review & Editing"
   - name          : "Isobel Heck"
     affiliation   : "2"
     role:
+      - "Conceptualization"
       - "Writing - Review & Editing"
-      - "Supervision"
+  - name          : "Katherine Kinzler"
+    affiliation   : "3"
+    role:
+      - "Conceptualization"
+      - "Writing - Review & Editing"
+      - "Supervision"   
 
 affiliation:
   - id            : "1"
     institution   : "University of Chicago"
   - id            : "2"
     institution   : "University of Rochester"
-
+  - id            : "3"
+    institution   : "University of Chicago"
+       
 authornote: |
   Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
 
@@ -40,7 +48,7 @@ abstract: |
   
   <!-- https://tinyurl.com/ybremelq -->
   
-keywords          : "keywords"
+keywords          : "parent-child, socialization, values, ideology, sociopolitical, diversity, authoritarian"
 wordcount         : "X"
 
 bibliography      : "AVCB_references.bib"
@@ -50,9 +58,9 @@ linenumbers       : yes
 draft             : no
 mask              : no
 
-figurelist        : no
-tablelist         : no
-footnotelist      : no
+figurelist        : yes
+tablelist         : yes
+footnotelist      : yes
 
 classoption       : "man"
 output            : papaja::apa6_pdf
@@ -60,7 +68,7 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include = FALSE}
 library("papaja")
-r_refs("r-references.bib")
+r_refs("AVCB_references.bib")
 ```
 
 ```{r analysis-preferences}
@@ -85,28 +93,65 @@ library(psych)
 library(stats)
 library(lme4)
 library(scales)
-
+library(papaja)
+library(data.table)
+library(DescTools)
+library(ggsci)
+library(RColorBrewer)
 ```
 
-```{r import data}
+```{r import data, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
 source("Scripts/AVCB_data-prep.R")
 
-
 ```
+Adults hold strong social and political values that guide their behaviors in the world. How are these values transferred across generations? In the proposed project, we investigate how parents’ and children’s authoritarian values—those placed on authority, order, and conformity—shape the socialization of racial ideology among racially diverse (Black, White, Latinx, Asian) parent-child dyads, and among families in more versus less diverse environments.
+  
+Authoritarian values have long garnered attention given their relations to social-group-based attitudes including outgroup prejudice, policy preferences, and attitudes toward societal change [@stenner2005authoritarian; @hetherington2009authoritarianism]. Traditional accounts posit that authoritarian values only emerge in early adulthood [@altemeyer1998other].  Challenging this perspective, our lab created a novel measure of children’s authoritarian values and demonstrated that parents’ and children’s authoritarian values are correlated as early as age 6, suggesting the roots of these values may be present earlier in life than previously believed.
+  
+This finding raises questions about how early-life authoritarian values shape children’s other developing ideologies. One place authoritarian values may manifest is in ideologies related to talking about race. Two prominent racial ideologies are colorblindness and color-consciousness [@rattan2013diversity].  Colorblindness is rooted in the belief that race does not matter and should not be considered when making decisions, forming impressions, or navigating the world. Conversely, color-consciousness celebrates racial differences and uniqueness, while recognizing that race and ethnicity impact access to opportunities [@apfelbaum2012racial].  We hypothesize that parents’ authoritarian values may predict parents’ racial socialization practices, and that parents’ and children’s authoritarian values may predict parent-child dyads’ attitudes about how to talk about race (i.e., colorblind vs. color-conscious attitudes).
+  
+We further predict that the nature of this relation may differ among parent-child dyads with different racial identities, and among dyads living in more vs. less diverse environments. We make this prediction for two main reasons. First, recent studies provide preliminary evidence that authoritarian values may measure different constructs among Black and White adults as. Perez and Hertherington find this in their [-@perez2014authoritarianism] study.  Second, prior research indicates that racial ideologies vary across parents from different racial groups. Specifically, White American adults endorse colorblind attitudes more than adults from American minority groups,  which is reflected in White parents’ higher likelihood of engaging in socialization practices that de-emphasize the importance of race [e.g., @hughes2006parents; @pahlke2012relations]. For these reasons, we predict that authoritarian values may be more strongly predictive of colorblind attitudes among White parent-child dyads than among parent-child dyads from American minority groups.
+  
+The above predictions extend research on racial socialization by examining the mechanisms through which parents transmit values and ideologies to their children. There is a large body of literature documenting parents’ racial and ethnic socialization practices. However, much less is known about the roots of children’s own racial ideologies, or about how other ideologies (e.g., authoritarian values) might contribute to racial socialization practices. By examining parents’ and children’s attitudes in parallel, we aim to provide novel insight into the transmission and development of socio-political attitudes and racial ideologies.
 
 <!-- This is my HTML-style comment. I can see this, but it won't show up when I knit the document -->
 
-These are my plots. In Figure \@ref(my plots), you can see XYZ.
+These are my plots. In Figure \@ref(fig:plots), you can see XYZ.
 
-```{r Plots, eval=TRUE, include=TRUE}
-source("Scripts/AVCB_plots.R")
+```{r plots, fig.cap="This is the caption.", echo=FALSE}
+#source("Scripts/AVCB_plots.R")
+
+AVCB_Bothscores %>% filter(!is.na(Child_Class_Self_choice)) %>% 
+  ggplot(aes(x = Child_Class_Self_choice, y = Child_AVscore_Self, fill = Child_Class_Self_choice)) +
+  geom_boxplot(show.legend = FALSE) +
+  geom_jitter(show.legend = FALSE)  +
+  labs(
+    title = "Relation Between Children's Classroom Choice and Authoritarian Values Score",
+    x = "Classroom Choice",
+    y = "Authoritarian Values Score (higher = more authoritarian)",
+    color = "Classroom Choice"
+  ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_x_discrete(labels=c('Colorblind', 'Color-conscious'))
 
 ```
 
-In Table \@ref(r dem table), we can see the summary of parents' education levels.
+```{r}
 
-```{r dem table}
+```
+
+In Table \@ref(tab:dem-table), we can see the summary of XYZ.
+
+```{r dem-table, results='asis', fig.cap="This is the caption.", echo=FALSE}
 source("Scripts/AVCB_tables.R")
+
+gender_table %>% apa_table()
+race_match_table %>% apa_table()
+race_table %>% apa_table()
+income_table %>% apa_table()
+pol_table %>% apa_table()
+ed_table %>% apa_table()
 
 ```
 
@@ -123,23 +168,6 @@ source("Scripts/AVCB_tables.R")
 
 ```
 The correlation between parents' authoritarian values score and COBRAS score shows that there is some positive association: as parents' authoritarian values score increases, their COBRAS score increases too (and this effect was significant).
-
-
-^Having trouble
-
-
-
-Adults hold strong social and political values that guide their behaviors in the world. How are these values transferred across generations? In the proposed project, we investigate how parents’ and children’s authoritarian values—those placed on authority, order, and conformity—shape the socialization of racial ideology among racially diverse (Black, White, Latinx, Asian) parent-child dyads, and among families in more versus less diverse environments. 
-  
-  Authoritarian values have long garnered attention given their relations to social-group-based attitudes including outgroup prejudice, policy preferences, and attitudes toward societal change [@stenner2005authoritarian; @xhetherington2009authoritarianism]. Traditional accounts posit that authoritarian values only emerge in early adulthood [@altemeyer1998other].  Challenging this perspective, our lab created a novel measure of children’s authoritarian values and demonstrated that parents’ and children’s authoritarian values are correlated as early as age 6, suggesting the roots of these values may be present earlier in life than previously believed.  
-  
-  This finding raises questions about how early-life authoritarian values shape children’s other developing ideologies. One place authoritarian values may manifest is in ideologies related to talking about race. Two prominent racial ideologies are colorblindness and color-consciousness [@rattan2013diversity].  Colorblindness is rooted in the belief that race does not matter and should not be considered when making decisions, forming impressions, or navigating the world. Conversely, color-consciousness celebrates racial differences and uniqueness, while recognizing that race and ethnicity impact access to opportunities [@apfelbaum2012racial].  We hypothesize that parents’ authoritarian values may predict parents’ racial socialization practices, and that parents’ and children’s authoritarian values may predict parent-child dyads’ attitudes about how to talk about race (i.e., colorblind vs. color-conscious attitudes). 
-  
-  We further predict that the nature of this relation may differ among parent-child dyads with different racial identities, and among dyads living in more vs. less diverse environments. We make this prediction for two main reasons. First, recent studies provide preliminary evidence that authoritarian values may measure different constructs among Black and White adults.  Second, prior research indicates that racial ideologies vary across parents from different racial groups. Specifically, White American adults endorse colorblind attitudes more than adults from American minority groups,  which is reflected in White parents’ higher likelihood of engaging in socialization practices that de-emphasize the importance of race. ,  For these reasons, we predict that authoritarian values may be more strongly predictive of colorblind attitudes among White parent-child dyads than among parent-child dyads from American minority groups. 
-  
-  The above predictions extend research on racial socialization by examining the mechanisms through which parents transmit values and ideologies to their children. There is a large body of literature documenting parents’ racial and ethnic socialization practices. However, much less is known about the roots of children’s own racial ideologies, or about how other ideologies (e.g., authoritarian values) might contribute to racial socialization practices. By examining parents’ and children’s attitudes in parallel, we aim to provide novel insight into the transmission and development of socio-political attitudes and racial ideologies. 
-
-
 
 # Methods
 We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
