@@ -1,0 +1,17 @@
+# Ignore the localonly directory
+/localonly/
+
+# Ignore all pdfs and temporary files
+*.tmp
+
+# Ignore one specific file
+Dissertation Proposal Presentation_Final.pptx
+
+# Ignore sensitive information
+secrets.json
+
+# R specific
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
