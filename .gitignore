@@ -2,7 +2,6 @@
 /localonly/
 
 # Ignore all pdfs and temporary files
-*.pdf
 *.tmp
 
 # Ignore one specific file
