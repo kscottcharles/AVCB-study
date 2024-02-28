@@ -1,8 +1,13 @@
 # Ignore the localonly directory
 /localonly/
 
-# Ignore all pdfs and temporary files
+# Ignore all temporary files
 *.tmp
+*.tex
+*.log
+
+#Ignore all folders ending in _files
+*_files/
 
 # Ignore one specific file
 Dissertation Proposal Presentation_Final.pptx
