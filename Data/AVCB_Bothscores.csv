@@ -1,0 +1,141 @@
+Family_ID,Single Child ID,Years,Child_Class_Self_choice,Child_Class_Parents_choice,COBRAS_avg,Parent_Class_Self_choice,Class_Self_Rating_CB,Class_Self_Rating_CC,Class_Self_Rating_CB_num,Class_Self_Rating_CC_num,Self_diff,Class_Teacher_choice,Class_Teacher_Rating_CB,Class_Teacher_Rating_CC,Class_Teacher_Rating_CB_num,Class_Teacher_Rating_CC_num,Teacher_diff,Parent_AVscore,Child_AVscore_Self,Child_AVscore_Parent
+1,7555,7,CB,CC,1.25,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike,Like a lot,2,7,-5,0,0,0.75
+1,11450,6,NA,CC,1.25,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike,Like a lot,2,7,-5,0,0,0.75
+2,RP-0532,6,CB,CC,1.5,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like a lot,3,7,-4,0.25,0.25,0.75
+2,RP-0531,8,CB,CB,1.5,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like a lot,3,7,-4,0.25,0.5,0.75
+2,RP-0530,10,CC,CC,1.5,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like a lot,3,7,-4,0.25,0,0.25
+3,7992,7,CB,CB,2.25,CC,A little similar,Very similar,5,7,-2,CC,Neutral,Like,4,6,-2,0,0.5,0.25
+4,4710,9,CC,CC,1,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike,Like a lot,2,7,-5,0,0.25,1
+4,6853,6,CC,CC,1,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike,Like a lot,2,7,-5,0,1,0.75
+5,8858,6,CC,CB,1,CC,A little similar,Similar,5,6,-1,CC,NA,Like,NA,6,NA,0,0,0.5
+6,RP-0221,9,CC,CC,4.25,CC,Neutral,Very similar,4,7,-3,CC,Like a little,Like a lot,5,7,-2,0.25,0,0
+7,10722,7,CC,CC,1.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike,Like a lot,2,7,-5,0,0,0.75
+8,13358,6,CB,CB,2.25,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like,5,6,-1,0.75,0.75,0.75
+8,13357,8,CB,CB,2.25,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like,5,6,-1,0.75,0.25,1
+8,13356,10,CB,CB,2.25,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like,5,6,-1,0.75,0,1
+9,8841,6,CB,CB,2.5,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike a little,Like,3,6,-3,0.25,0.5,0.5
+10,6132,7,CB,CB,3.25,CC,Neutral,Similar,4,6,-2,CC,Like a little,Like a lot,5,7,-2,0.5,0.75,0.5
+11,9838,9,CC,CC,4.25,CB,Similar,Similar,6,6,0,CB,Like a little,Like a little,5,5,0,0.25,0.5,0.5
+11,9837,7,CC,CC,4.25,CB,Similar,Similar,6,6,0,CB,Like a little,Like a little,5,5,0,0.25,0.75,0.75
+12,4236,9,CB,CB,2.75,CB,A little similar,Neutral,5,4,1,CB,Like a little,Neutral,5,4,1,0.25,0.25,1
+12,6939,7,CB,CB,2.75,CB,A little similar,Neutral,5,4,1,CB,Like a little,Neutral,5,4,1,0.25,0.75,0.75
+12,10708,6,NA,NA,2.75,CB,A little similar,Neutral,5,4,1,CB,Like a little,Neutral,5,4,1,0.25,NA,NA
+13,6196,7,CB,CB,2,CC,Similar,Very similar,6,7,-1,CC,Like,Like a lot,6,7,-1,0.25,0.25,0.75
+14,RP-0159,10,CC,CC,5.5,CB,Very similar,A little similar,7,5,2,CB,Like a lot,Like a little,7,5,2,0.25,0.25,0.25
+15,9245,8,CC,CC,1.5,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like,5,6,-1,0,0.5,1
+16,4247,9,CB,CC,2.25,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like a lot,NA,7,NA,0,0.5,1
+16,8631,9,CC,CC,2.25,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like a lot,NA,7,NA,0,0.75,0.75
+17,5012,8,CB,CB,1,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a lot,Like a lot,1,7,-6,0.5,0.25,1
+17,8394,6,CB,CC,1,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a lot,Like a lot,1,7,-6,0.5,1,0.5
+18,8936,6,CC,CC,2.25,CC,Similar,Very similar,6,7,-1,CC,Like,Like a lot,6,7,-1,0,0.75,1
+19,14319,8,CC,CC,2,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like,NA,6,NA,0.25,0.5,0.5
+19,14316,10,CC,CC,2,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like,NA,6,NA,0.25,0,0.75
+20,10458,6,CB,CB,4.25,CC,A little similar,Similar,5,6,-1,CC,Like,Like,6,6,0,0.25,0.5,1
+20,4744,9,CC,CC,4.25,CC,A little similar,Similar,5,6,-1,CC,Like,Like,6,6,0,0.25,0.5,0.75
+21,4069,9,CB,CB,1.5,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0,0.5,0.75
+22,4759,8,CC,CC,3.5,CC,Similar,Similar,6,6,0,CC,NA,Like,NA,6,NA,0.5,0.75,0.75
+23,6753,6,CC,CB,4,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like,7,6,1,0.25,1,0.75
+24,3971,10,CC,CC,2.5,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a little,Like a lot,3,7,-4,0.25,0.75,1
+24,6508,7,CB,CB,2.5,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a little,Like a lot,3,7,-4,0.25,0.25,1
+25,10611,9,CB,CB,1.5,CC,Neutral,Similar,4,6,-2,CC,Like a little,Like,5,6,-1,0,0,0.5
+26,7136,7,CB,CB,2.5,CB,Very similar,A little similar,7,5,2,CB,Like,Like a little,6,5,1,0.5,0.5,0.75
+27,7895,7,CB,CB,1.5,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0.25,0.25,0.75
+28,7533,6,CC,CC,2.5,CB,Similar,A little similar,6,5,1,CB,Like,Like a little,6,5,1,0.5,0.5,0.5
+29,7302,6,NA,CB,2,CC,A little dissimilar,Very similar,3,7,-4,CC,NA,Like a lot,NA,7,NA,0,0.75,NA
+30,8854,6,CC,CC,2.25,CC,A little similar,Very similar,5,7,-2,CC,Dislike,Like a lot,2,7,-5,0,1,1
+31,2447,10,CC,CC,1.75,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0.5,0.25,0.5
+31,5263,8,CC,CC,1.75,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0.5,0.25,0.25
+32,14228,7,CB,NA,4.25,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like,7,6,1,0.5,0.5,1
+33,RP-0123,6,CB,CB,4.75,CC,A little similar,Similar,5,6,-1,CB,Like a little,Like a little,5,5,0,0.75,0.25,0.75
+33,RP-0122,9,CB,CB,4.75,CC,A little similar,Similar,5,6,-1,CB,Like a little,Like a little,5,5,0,0.75,0.5,0.75
+34,5165,10,NA,NA,4,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like,7,6,1,0.75,0.25,0
+34,6020,8,CC,CC,4,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like,7,6,1,0.75,0.25,0.25
+35,9225,8,CB,CB,2.25,CC,A little similar,Very similar,5,7,-2,CC,Like a little,Like a lot,5,7,-2,0,0.5,1
+36,6932,7,CC,CC,2.5,CC,A little dissimilar,A little similar,3,5,-2,CC,Dislike a little,Like a little,3,5,-2,0,0.25,0.75
+37,16053,7,CB,CC,3.75,CC,Similar,Similar,6,6,0,CB,Like,Like,6,6,0,0.25,0.5,NA
+38,15909,9,CC,CC,3.25,CB,Very similar,A little similar,7,5,2,CB,Like a lot,Like,7,6,1,0,0.5,0.5
+38,15911,9,CC,CC,3.25,CB,Very similar,A little similar,7,5,2,CB,Like a lot,Like,7,6,1,0,0,1
+39,5529,9,CB,CB,1.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like a lot,3,7,-4,0,0.5,0.5
+39,7247,6,CB,CB,1.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like a lot,3,7,-4,0,0.5,0.5
+40,16139,9,CC,CB,2,CC,Dissimilar,Similar,2,6,-4,CC,Dislike,Like,2,6,-4,0.25,0.5,0.5
+41,9694,8,CC,CC,1.5,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like,3,6,-3,0.25,0.5,0.75
+41,9693,8,CB,CB,1.5,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like,3,6,-3,0.25,0.5,0.25
+42,6392,7,CB,CC,1.75,CC,Dissimilar,Similar,2,6,-4,CC,NA,Like,NA,6,NA,0.25,0,0.75
+43,9071,7,CC,CC,1.25,CC,Dissimilar,Similar,2,6,-4,CC,Dislike,Like a lot,2,7,-5,0,0.25,0
+44,10230,8,CB,CC,1,CC,Very dissimilar,Very similar,1,7,-6,CC,NA,Like a lot,NA,7,NA,0.25,0,1
+45,8599,8,CC,CB,1.75,CC,Dissimilar,Similar,2,6,-4,CC,NA,Like a lot,NA,7,NA,0,0.25,1
+46,7385,7,CC,NA,4.75,CB,Very similar,Very similar,7,7,0,CB,Like a lot,Like a little,7,5,2,0.25,0.5,0.75
+47,8788,8,NA,CB,2,CC,A little similar,Similar,5,6,-1,CC,Neutral,Like a lot,4,7,-3,0.5,0.5,0.75
+48,10130,6,CB,CB,2.5,CC,Similar,Very similar,6,7,-1,CC,Like,Like a lot,6,7,-1,0,0.75,0.5
+49,6703,8,CB,CC,1,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0,0.5,0.75
+50,11575,7,CB,CB,5.5,CC,Similar,Similar,6,6,0,CC,Like,Like,6,6,0,0.5,0.75,1
+51,14124,6,CB,CB,3,CC,A little similar,Very similar,5,7,-2,CC,Like a little,Like a lot,5,7,-2,0.25,0.5,0.5
+52,8209,7,CC,CB,1,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like,5,6,-1,0,0.25,1
+53,8713,9,CC,CC,5.5,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like a lot,5,7,-2,0,0.75,0.75
+53,8714,6,CB,CB,5.5,CC,A little similar,Similar,5,6,-1,CC,Like a little,Like a lot,5,7,-2,0,0.5,0.75
+54,7444,7,CC,CC,3.25,CC,Neutral,Similar,4,6,-2,CC,Dislike a little,Like a little,3,5,-2,0,0.75,0.75
+54,4252,10,CC,CB,3.25,CC,Neutral,Similar,4,6,-2,CC,Dislike a little,Like a little,3,5,-2,0,0.75,1
+55,16778,7,CB,CB,3.5,CB,Similar,A little similar,6,5,1,CB,Like,Like,6,6,0,0.5,0,0.5
+55,16780,7,CC,CC,3.5,CB,Similar,A little similar,6,5,1,CB,Like,Like,6,6,0,0.5,0.5,0.75
+56,10016,7,CC,CC,3,CC,Similar,Very similar,6,7,-1,CC,Like,Like a lot,6,7,-1,0.25,0.25,1
+57,10131,10,CC,CC,2.75,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a little,Like a lot,3,7,-4,0.25,0.5,0.5
+57,10132,9,CC,CC,2.75,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a little,Like a lot,3,7,-4,0.25,0,0.25
+58,6059,8,CB,CB,1.75,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like,NA,6,NA,0,0.5,0.75
+59,8662,8,CC,CC,2.25,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0,0.25,1
+60,5890,9,CC,CC,5,CB,Very similar,A little similar,7,5,2,CB,Like a lot,Like a little,7,5,2,0.5,0.5,0.75
+61,RP-0184,8,CC,CB,2,CC,A little similar,Very similar,5,7,-2,CC,Like a little,Like a lot,5,7,-2,0,0.5,0.5
+62,RP-0381,9,CC,CB,1.5,CC,Dissimilar,Similar,2,6,-4,CC,Dislike,Like,2,6,-4,0,0,0.75
+63,7455,8,CC,NA,1.5,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a little,Like a lot,3,7,-4,0,0.5,0.75
+64,11357,6,CC,CC,1.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like a lot,3,7,-4,0,0.75,0.5
+65,9479,6,CB,CB,2,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like,NA,6,NA,0,0.25,1
+65,9480,8,CC,CC,2,CC,A little dissimilar,Similar,3,6,-3,CC,NA,Like,NA,6,NA,0,0.75,0.5
+66,RP-1049,9,CC,CC,2.25,CC,Similar,Very similar,6,7,-1,CC,Like a little,Like a lot,5,7,-2,0,0.25,0.75
+67,9520,6,CC,CC,4.25,CC,A little similar,Very similar,5,7,-2,CC,Like a little,Like,5,6,-1,0,0.5,0.75
+68,6337,8,CC,CC,1.25,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike,Like a lot,2,7,-5,0,1,1
+68,4561,10,CB,CC,1.25,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike,Like a lot,2,7,-5,0,0,0.5
+69,8378,6,CC,CC,1.25,CC,Similar,Very similar,6,7,-1,CC,Like,Like a lot,6,7,-1,0.75,0.5,0.5
+69,6080,9,CC,CC,1.25,CC,Similar,Very similar,6,7,-1,CC,Like,Like a lot,6,7,-1,0.75,0.75,1
+70,8229,6,CC,CC,5.25,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like a lot,7,7,0,0.25,1,1
+70,8228,7,CB,CC,5.25,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like a lot,7,7,0,0.25,0,0.75
+70,8227,9,CC,CC,5.25,CB,Very similar,Similar,7,6,1,CB,Like a lot,Like a lot,7,7,0,0.25,0.5,0.75
+71,11468,6,CB,CB,3.25,CC,Similar,Similar,6,6,0,CC,Like a lot,Like,7,6,1,0.5,0.75,0.75
+72,9276,6,CB,CB,2,CC,Dissimilar,Similar,2,6,-4,CC,Neutral,Like a lot,4,7,-3,0,0.5,1
+73,12052,8,CB,CB,4,CC,A little similar,Similar,5,6,-1,CC,Like a lot,Like a lot,7,7,0,0,0.75,0.75
+74,16980,7,CC,CC,1,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0,0.5,0.75
+74,16817,7,CC,NA,1,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike,Like a lot,2,7,-5,0,0.5,0.75
+75,RP-1038,7,CC,CB,3.5,CC,A little similar,Very similar,5,7,-2,CC,Like a lot,Like a lot,7,7,0,0,0.25,1
+75,RP-1037,9,CB,CB,3.5,CC,A little similar,Very similar,5,7,-2,CC,Like a lot,Like a lot,7,7,0,0,0.5,0.75
+76,8092,7,CC,CB,1.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Dislike a little,Like,3,6,-3,0,0.25,0.75
+77,8514,6,CC,CB,1.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Like a little,Like a lot,5,7,-2,0.5,0.5,1
+78,4570,10,CC,CC,2.25,CB,Similar,Similar,6,6,0,CB,Like a lot,Like,7,6,1,0,0,0.25
+78,4571,10,CC,CC,2.25,CB,Similar,Similar,6,6,0,CB,Like a lot,Like,7,6,1,0,0.25,0.75
+79,10586,7,CC,CC,2,CC,Dissimilar,Very similar,2,7,-5,CC,Dislike a lot,Like a lot,1,7,-6,0,1,1
+80,10109,6,CB,CB,3.5,CB,Similar,A little similar,6,5,1,CC,Like,Like a lot,6,7,-1,NA,1,1
+80,10108,7,CB,CB,3.5,CB,Similar,A little similar,6,5,1,CC,Like,Like a lot,6,7,-1,NA,0.5,0.75
+81,4709,10,CC,CB,4,CB,A little similar,A little similar,5,5,0,CB,NA,Like,NA,6,-6,0.5,0,0.5
+82,12073,6,CB,CC,4.5,CB,Similar,Dissimilar,6,2,4,CB,Like,Dislike,6,2,4,0.75,0.5,1
+83,8039,10,CC,CC,4.25,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike,Like,2,6,-4,0.5,0.5,1
+83,8041,7,CC,CC,4.25,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike,Like,2,6,-4,0.5,0.25,0.75
+83,8040,8,CC,CC,4.25,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike,Like,2,6,-4,0.5,0.25,0
+84,10031,6,CB,CC,3.5,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike a little,Like,3,6,-3,0.25,0.5,0.75
+85,7597,10,NA,CC,2.5,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike a little,Like,3,6,-3,0,0.5,0.75
+86,10379,10,CC,CC,2.5,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike a little,Like a lot,3,7,-4,0.25,0.5,0.5
+87,8617,6,CC,CC,1,CC,Very dissimilar,Very similar,1,7,-6,CC,Dislike a lot,Like a lot,1,7,-6,0,0,1
+88,6565,8,CB,CC,2.5,CC,Very dissimilar,Similar,1,6,-5,CC,Dislike,Like,2,6,-4,0.25,0.5,0.5
+89,19839,10,CC,CC,1.25,CC,Similar,Very similar,6,7,-1,CC,Like a little,Like a lot,5,7,-2,0,0,0.5
+89,19840,9,CC,CB,1.25,CC,Similar,Very similar,6,7,-1,CC,Like a little,Like a lot,5,7,-2,0,0.25,0.5
+90,4702,10,CC,CC,4,CB,A little similar,A little dissimilar,5,3,2,CB,Like a little,Dislike a little,5,3,2,0,0.5,0.75
+91,4758,10,CB,CB,4,CC,A little similar,A little similar,5,5,0,CB,Neutral,Neutral,4,4,0,0.75,0,0.75
+92,8144,7,CC,CC,2.75,CB,Very similar,A little dissimilar,7,3,4,CB,Like,Dislike a little,6,3,3,0.25,0.5,0.5
+93,4875,10,CC,CC,1,CC,A little similar,A little similar,5,5,0,CC,Like a little,Like,5,6,-1,0.25,0.25,0.75
+93,7391,7,CB,CC,1,CC,A little similar,A little similar,5,5,0,CC,Like a little,Like,5,6,-1,0.25,0.5,1
+94,8834,6,CB,CB,2,CC,A little dissimilar,Very similar,3,7,-4,CC,Like a lot,Dislike,7,2,5,0.25,0.25,1
+95,8160,6,CC,CC,5.5,CB,Similar,A little dissimilar,6,3,3,CB,NA,Like,NA,6,NA,0.5,0.5,0.5
+95,8159,8,CC,CB,5.5,CB,Similar,A little dissimilar,6,3,3,CB,NA,Like,NA,6,NA,0.5,0.25,1
+96,11323,6,CB,CB,2.25,CB,Very similar,Dissimilar,7,2,5,CB,Like a lot,Neutral,7,4,3,0,0.25,1
+97,8529,7,CB,CB,2,CC,A little similar,Very similar,5,7,-2,CC,Like a little,Like a lot,5,7,-2,0,0.75,0.75
+98,6316,9,CC,CC,2.75,CC,A little dissimilar,Very similar,3,7,-4,CC,Like a little,Like a lot,5,7,-2,0.25,0.5,1
+99,9967,7,CC,CC,5,CB,Similar,Similar,6,6,0,CB,Like,Like,6,6,0,0.25,0.25,0.5
+100,7961,6,CC,CC,3,CC,A little dissimilar,Similar,3,6,-3,CC,Dislike,Like,2,6,-4,0.25,0.5,0.75
+101,7309,7,CB,CC,3.75,CB,Similar,Neutral,6,4,2,CB,Like,Like a little,6,5,1,0.5,1,0.5
+101,7311,9,CC,CB,3.75,CB,Similar,Neutral,6,4,2,CB,Like,Like a little,6,5,1,0.5,0.5,1

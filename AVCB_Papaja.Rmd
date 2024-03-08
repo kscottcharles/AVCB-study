@@ -31,30 +31,16 @@ affiliation:
     institution   : "University of Rochester"
   - id            : "3"
     institution   : "University of Chicago"
-       
-authornote: |
-  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
 
-  Enter author note here.
 
-abstract: |
-  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
-  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-  One sentence clearly stating the **general problem** being addressed by  this particular study.
-  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-  One or two sentences to put the results into a more **general context**.
-  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
-  
-  <!-- https://tinyurl.com/ybremelq -->
   
 keywords          : "parent-child, socialization, values, ideology, sociopolitical, diversity, authoritarian"
 wordcount         : "X"
 
 bibliography      : "AVCB_references.bib"
 
-floatsintext      : no
-linenumbers       : yes
+floatsintext      : yes
+linenumbers       : no
 draft             : no
 mask              : no
 
@@ -68,7 +54,9 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include = FALSE}
 library("papaja")
-r_refs("AVCB_references.bib")
+r_refs("AVCB_references.bib") #adds all packages you used to bibfile
+
+
 ```
 
 ```{r analysis-preferences}
@@ -98,35 +86,252 @@ library(data.table)
 library(DescTools)
 library(ggsci)
 library(RColorBrewer)
+library(apaTables)
+library(regclass)
+library(car)
 ```
 
 ```{r import data, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
-source("Scripts/AVCB_data-prep.R")
+source("Source/AVCB_data-prep.R")
 
 ```
-Adults hold strong social and political values that guide their behaviors in the world. How are these values transferred across generations? In the proposed project, we investigate how parents’ and children’s authoritarian values—those placed on authority, order, and conformity—shape the socialization of racial ideology among racially diverse (Black, White, Latinx, Asian) parent-child dyads, and among families in more versus less diverse environments.
+Adults hold strong social and political values that guide their behaviors in the world. How are these values transferred across generations? In this project, we investigated how parents’ and children’s authoritarian values—those placed on authority, order, and conformity—shape the socialization of racial ideology among racially diverse (Black, White, Latinx, Asian) parent-child dyads, and among families in more versus less diverse environments.
   
 Authoritarian values have long garnered attention given their relations to social-group-based attitudes including outgroup prejudice, policy preferences, and attitudes toward societal change [@stenner2005authoritarian; @hetherington2009authoritarianism]. Traditional accounts posit that authoritarian values only emerge in early adulthood [@altemeyer1998other].  Challenging this perspective, our lab created a novel measure of children’s authoritarian values and demonstrated that parents’ and children’s authoritarian values are correlated as early as age 6, suggesting the roots of these values may be present earlier in life than previously believed.
   
-This finding raises questions about how early-life authoritarian values shape children’s other developing ideologies. One place authoritarian values may manifest is in ideologies related to talking about race. Two prominent racial ideologies are colorblindness and color-consciousness [@rattan2013diversity].  Colorblindness is rooted in the belief that race does not matter and should not be considered when making decisions, forming impressions, or navigating the world. Conversely, color-consciousness celebrates racial differences and uniqueness, while recognizing that race and ethnicity impact access to opportunities [@apfelbaum2012racial].  We hypothesize that parents’ authoritarian values may predict parents’ racial socialization practices, and that parents’ and children’s authoritarian values may predict parent-child dyads’ attitudes about how to talk about race (i.e., colorblind vs. color-conscious attitudes).
+This finding raises questions about how early-life authoritarian values shape children’s other developing ideologies. One place authoritarian values may manifest is in ideologies related to talking about race. Two prominent racial ideologies are colorblindness and color-consciousness [@rattan2013diversity].  Colorblindness is rooted in the belief that race does not matter and should not be considered when making decisions, forming impressions, or navigating the world. Conversely, color-consciousness celebrates racial differences and uniqueness, while recognizing that race and ethnicity impact access to opportunities [@apfelbaum2012racial].  
+
+# The Current Study
+
+In this project, we investigated how authoritarian values—those placed on authority, order, and conformity—may shape the socialization of racial ideologies across racially diverse (Black, White, Latinx, Asian) parent-child dyads. There is substantial evidence that authoritarian values relate to adults’ openness to societal change and stances on diversity-related topics, suggesting that authoritarian values may play a critical role in shaping the way parents talk about race. Furthermore, prior research suggests that relations between authoritarian values and racial ideologies are likely to operate differently across racial group membership.
+
+We hypothesized that parents’ authoritarian values may predict parents’ racial socialization practices, and that parents’ and children’s authoritarian values may predict parent-child dyads’ attitudes about how to talk about race (i.e., colorblind vs. color-conscious attitudes).
   
-We further predict that the nature of this relation may differ among parent-child dyads with different racial identities, and among dyads living in more vs. less diverse environments. We make this prediction for two main reasons. First, recent studies provide preliminary evidence that authoritarian values may measure different constructs among Black and White adults as. Perez and Hertherington find this in their [-@perez2014authoritarianism] study.  Second, prior research indicates that racial ideologies vary across parents from different racial groups. Specifically, White American adults endorse colorblind attitudes more than adults from American minority groups,  which is reflected in White parents’ higher likelihood of engaging in socialization practices that de-emphasize the importance of race [e.g., @hughes2006parents; @pahlke2012relations]. For these reasons, we predict that authoritarian values may be more strongly predictive of colorblind attitudes among White parent-child dyads than among parent-child dyads from American minority groups.
+We further predicted that the nature of this relation may differ among parent-child dyads with different racial identities. We make this prediction for two main reasons. First, recent studies provide preliminary evidence that authoritarian values may measure different constructs among Black and White adults, as Perez and Hertherington find in their [-@perez2014authoritarianism] study. Second, prior research indicates that racial ideologies vary across parents from different racial groups. Specifically, White American adults endorse colorblind attitudes more than adults from American minority groups,  which is reflected in White parents’ higher likelihood of engaging in socialization practices that de-emphasize the importance of race [e.g., @hughes2006parents; @pahlke2012relations]. For these reasons, we predicted that authoritarian values may be more strongly predictive of colorblind attitudes among White parent-child dyads than among parent-child dyads from American minority groups. For the purposes of this paper, we will only present data from the White parent-child dyads.
   
 The above predictions extend research on racial socialization by examining the mechanisms through which parents transmit values and ideologies to their children. There is a large body of literature documenting parents’ racial and ethnic socialization practices. However, much less is known about the roots of children’s own racial ideologies, or about how other ideologies (e.g., authoritarian values) might contribute to racial socialization practices. By examining parents’ and children’s attitudes in parallel, we aim to provide novel insight into the transmission and development of socio-political attitudes and racial ideologies.
 
-<!-- This is my HTML-style comment. I can see this, but it won't show up when I knit the document -->
+# Methods
 
-These are my plots. In Figure \@ref(fig:plots), you can see XYZ.
+## Pre-registration
 
-```{r plots, fig.cap="This is the caption.", echo=FALSE}
-#source("Scripts/AVCB_plots.R")
 
-AVCB_Bothscores %>% filter(!is.na(Child_Class_Self_choice)) %>% 
-  ggplot(aes(x = Child_Class_Self_choice, y = Child_AVscore_Self, fill = Child_Class_Self_choice)) +
+This study’s desired sample size, included variables, hypotheses, and planned analyses were preregistered on Open Science Framework (https://osf.io/3dntc/?view_only=ae7249dc2b6d419c8868d0c2cf1866f4) prior to any data being collected.
+
+```{r}
+source("Source/AVCB_tables.R")
+```
+
+```{r dem-table1, results='hold'}
+gender_table %>% apa_table()
+```
+
+```{r dem-table2, results='hold'}
+race_match_table %>% apa_table()
+```
+
+```{r dem-table3, results='hold'}
+race_table %>% apa_table()
+```
+
+```{r dem-table4, results='hold'}
+income_table %>% apa_table()
+```
+
+```{r dem-table5, results='hold'}
+pol_table %>% apa_table()
+```
+
+```{r dem-table6, results='hold'}
+ed_table %>% apa_table()
+```
+## Participants
+We recruited 140 children ages 6-10 from 101 families from the Chicago, IL area. We received IRB approval for online recruitment and testing. In Tables \@ref(tab:dem-table1), \@ref(tab:dem-table2), \@ref(tab:dem-table3), \@ref(tab:dem-table4), \@ref(tab:dem-table5), and \@ref(tab:dem-table6) we have summarized the demographics of the sample.
+
+## Measures
+Parents and children completed measures separately. Parents complete measures using Qualtrics and children completed measures with an experimenter over Zoom. 
+
+### Authoritarian values
+We used the authoritarian child-rearing scale, a pre-validated and widely used measure. Parents completed the original version of this scale, which presents pairs of traits (one authoritarian, one non-authoritarian; e.g., respect for elders vs. independence) and asks parents which trait is more important for their child to display. Children completed a child-friendly version of this scale, created and pre-validated in our lab.  For each pair of traits, we ask children which trait they prefer (e.g., “Who do you like?”) and which trait they think their parents prefer (e.g., “Who do you think your parents like?”) (in counterbalanced order).
+
+### Racial ideology
+We designed and piloted a novel measure of colorblind attitudes. In this measure, parents and children learned about two classrooms in which the teachers used phrases that reflected color-conscious or colorblind ideologies. We asked parents which teacher’s message is most similar to the message they would use with their own children, and which teacher they would prefer their child to have. Using a read-aloud version of the measure, we asked children which class they prefered and which teacher they thought their parents preferred. Parents also completed a shortened version of the Colorblind Racial Attitudes Scale (CoBRAS), which allowed us to examine how our novel measure related to an existing measure of adults’ colorblind attitudes (example item: “It is more important to be colorblind than it is to celebrate differences in race and ethnicity”). 
+
+## Covariates
+In addition, we collected demographic information including: family income, parent’s highest level of education, parent political orientation, and family zip code.
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+# Results
+
+## Preliminary Analyses
+
+### Authoritarian Values
+Among both parents and children, we we averaged the responses to the four contrasts to compute a single authoritarian values scale.
+
+### Diversity Ideologies
+
+#### Classroom Measure
+```{r diffscore_corr}
+correlation_coefficient <- cor(AVCB_DIscores$Self_diff, AVCB_DIscores$Teacher_diff, use = "complete.obs")
+```
+Among parents, we computed two difference scores between ratings of the two classrooms; one for the Teacher questions and one for the Parent-actual questions. Because the two differences scores were highly correlated (r = `r correlation_coefficient`), for all future analyses involving the difference score for parents' rating of the colorblind and color-conscious classroom we used the parent-actual difference score (higher scores = higher preference for the colorblind classroom).
+```{r glm-pselfchoice_diffs, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+#non-logistic regression (categorical predictor with two  levels, continuous outcome)
+
+test_glm <- glm(Self_diff ~ Parent_Class_Self_choice,
+                      data = AVCB_DIscores)
+summary(test_glm)
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(test_glm))
+
+# Extract the beta value for 'Parent_Class_Self_choiceCC'
+beta_value <- coefficients_summary["Parent_Class_Self_choiceCC", "Estimate"]
+
+# Extract the standard error (SE) for 'Parent_Class_Self_choiceCC'
+se_value <- coefficients_summary["Parent_Class_Self_choiceCC", "Std. Error"]
+
+# Extract the p-value for 'Parent_Class_Self_choiceCC'
+p_value <- coefficients_summary["Parent_Class_Self_choiceCC", "Pr(>|t|)"]
+```
+We examined the relation between parents’ binary response and difference score using a generalized linear model. We included parents' self difference score as the outcome, and parents' binary response as a predictors. Parents' responses to the binary choice question was positively related to their scale ratings, such that parents who chose the color-conscious classroom rated the color-conscious classroom more favorably than the colorblind classroom ($\beta$ = `r beta_value`, $SE$ = `r se_value`, $p$ = `r p_value`).
+
+#### CoBRAS Scale
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+alpha_result <- psych::alpha(AVCB_wp_parents[, c("COBRAS_1_num", "COBRAS_2_num", "COBRAS_3_num", "COBRAS_4_num")])
+
+print(alpha_result$total$raw_alpha)
+
+alpha <- alpha_result$total$raw_alpha
+```
+Among parents, for the CoBRAS measure, we computed Cronbach’s alpha across the four items in the scale. Since Cronbach’s alpha = `r alpha`, we averaged across items to compute a single CoBRAS response.
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+AVCB_AVscores_parents <- AVCB_AVscores %>%
+  distinct(Family_ID, .keep_all = TRUE)
+
+mean_parentAVscore <- mean(AVCB_AVscores_parents$Parent_AVscore, na.rm = TRUE)
+sd_parentAVscore <- sd(AVCB_AVscores_parents$Parent_AVscore, na.rm = TRUE)
+
+mean_childAVscore_self <- mean(AVCB_AVscores_parents$Child_AVscore_Self, na.rm = TRUE)
+sd_childAVscore_self <- sd(AVCB_AVscores_parents$Child_AVscore_Self, na.rm = TRUE)
+
+mean_childAVscore_parent <- mean(AVCB_AVscores_parents$Child_AVscore_Parent, na.rm = TRUE)
+sd_childAVscore_parent <- sd(AVCB_AVscores_parents$Child_AVscore_Parent, na.rm = TRUE)
+```
+## Relations Between Parent Measures
+### CoBRAS and Classroom Measure
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE, fig.show='asis'}
+AVCB_DIscores_parents <- AVCB_DIscores %>%
+  distinct(Family_ID, .keep_all = TRUE)
+
+#Add column for Parent_Class_Self_choice called Parent_Class_Self_binary
+#1 = CB #0 = CC 
+
+AVCB_DIscores_parents <- AVCB_DIscores_parents %>%
+  mutate(Parent_Class_Self_binary = ifelse(Parent_Class_Self_choice == "CB", 1, 0))
+
+#glm
+CoBRAS_class_glm <- glm(Parent_Class_Self_binary ~ COBRAS_avg, data = AVCB_DIscores_parents, family = "binomial")
+
+sum_CoBRAS_class_glm <- summary(CoBRAS_class_glm)
+sum_CoBRAS_class_glm
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(CoBRAS_class_glm))
+
+# Extract the beta value for 'COBRAS_avg'
+beta_value <- coefficients_summary["COBRAS_avg", "Estimate"]
+
+# Extract the standard error (SE) for 'COBRAS_avg'
+se_value <- coefficients_summary["COBRAS_avg", "Std. Error"]
+
+# Extract the p-value for 'COBRAS_avg'
+p_value <- coefficients_summary["COBRAS_avg", "Pr(>|z|)"]
+```
+First, we constructed a logistic regression analysis, employing a generalized linear model, to examine the association between parents' binary response and their CoBRAS score. We included parents' binary response as the outcome and CoBRAS score as the predictor. The results revealed a statistically significant positive relationship between parents' CoBRAS score and parents' classroom preference ($\beta$ = `r beta_value`, $SE$ = `r se_value`, $p$ = `r p_value`). The positive beta coefficient suggests that parents who scored higher on CoBRAS tended to prefer the colorblind classroom over the color-conscious classroom. In Figure\ \@ref(fig:pCOBRAS-pClass), we provide a visualization of this relation.
+
+```{r pCOBRAS-pClass, fig.cap="Relation between parents' classroom choice and colorblindness score."}
+pCOBRAS_pClass <- AVCB_DIscores %>% filter(!is.na(Parent_Class_Self_choice)) %>% 
+  ggplot(aes(x = Parent_Class_Self_choice, y = COBRAS_avg, fill = Parent_Class_Self_choice)) +
+  geom_boxplot() +
+  geom_jitter() +                                         
+  labs(
+    x = "Parents' Classroom Choice",
+    y = "Parent Colorblindness Score (higher = more colorblind)",
+    caption = "CB = colorblind and CC = color-conscious",
+    color = "Child Age (Years)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none") +
+  coord_flip() +
+  scale_fill_brewer(palette = "Dark2")
+
+pCOBRAS_pClass
+
+```
+
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+#diff = CB-CC (higher = more colorblind)
+CoBRAS_diff_lm <- lm(Self_diff ~ COBRAS_avg, data = AVCB_DIscores_parents)
+
+sum_CoBRAS_diff_lm <- summary(CoBRAS_diff_lm)
+sum_CoBRAS_diff_lm
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(CoBRAS_diff_lm))
+
+# Extract the beta value for 'COBRAS_avg'
+beta_value <- coefficients_summary["COBRAS_avg", "Estimate"]
+
+# Extract the standard error (SE) for 'COBRAS_avg'
+se_value <- coefficients_summary["COBRAS_avg", "Std. Error"]
+
+# Extract the p-value for 'COBRAS_avg'
+p_value <- coefficients_summary["COBRAS_avg", "Pr(>|t|)"]
+```
+Next, we conducted a linear regression analysis to examine the association between parents' difference score and their CoBRAS score. We included parents' difference score as the outcome and CoBRAS score as the predictor. As expected, the results revealed a statistically significant positive relationship between parents' CoBRAS score and parents' difference score ($\beta$ = `r beta_value`, $SE$ = `r se_value`, $p$ = `r p_value`).  In line with results using parents' binary response as the outcome, the positive beta coefficient suggests that parents who scored higher on CoBRAS tended to prefer the colorblind classroom over the color-conscious classroom.
+
+### Diversity Ideology and Authoritarian Values
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+AVCB_Bothscores_parents <- AVCB_Bothscores %>%
+  distinct(Family_ID, .keep_all = TRUE)
+
+#Add column for Parent_Class_Self_choice called Parent_Class_Self_binary
+#1 = CB #0 = CC 
+
+AVCB_Bothscores_parents <- AVCB_Bothscores_parents %>%
+  mutate(Parent_Class_Self_binary = ifelse(Parent_Class_Self_choice == "CB", 1, 0))
+
+#glm
+AV_class_glm <- glm(Parent_Class_Self_binary ~ Parent_AVscore,
+                    family = "binomial",
+                    data = AVCB_Bothscores_parents)
+
+sum_AV_class_glm <- summary(AV_class_glm)
+sum_AV_class_glm
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(AV_class_glm))
+
+# Extract the beta value for 'Parent_AVscore'
+beta_value <- coefficients_summary["Parent_AVscore", "Estimate"]
+
+# Extract the standard error (SE) for 'Parent_AVscore'
+se_value <- coefficients_summary["Parent_AVscore", "Std. Error"]
+
+# Extract the p-value for 'Parent_AVscore'
+p_value <- coefficients_summary["Parent_AVscore", "Pr(>|z|)"]
+```
+First, we conducted a logistic regression analysis, employing a generalized linear model, to examine the association between parents' authoritarian values and their binary response. We included parents' binary response as the outcome and authoritarian values score as the predictor. The results revealed a statistically significant positive relationship between parents' authoritarian values score and parents' classroom preference ($\beta$ = `r beta_value`, $SE$ = `r se_value`, $p$ = `r p_value`). The positive beta coefficient suggests that parents with higher authoritarian values scores tended to prefer the colorblind classroom over the color-conscious classroom. In Figure \@ref(fig:pClass-pAV), we provide a visualization of this relation.
+
+```{r pClass-pAV, fig.cap="Relation between parents' classroom choice and authoritarian values score.", warning=FALSE}
+pClass_pAV <- AVCB_Bothscores %>% filter(!is.na(Parent_Class_Self_choice)) %>% 
+  ggplot(aes(x = Parent_Class_Self_choice, y = Parent_AVscore, fill = Parent_Class_Self_choice)) +
   geom_boxplot(show.legend = FALSE) +
   geom_jitter(show.legend = FALSE)  +
   labs(
-    title = "Relation Between Children's Classroom Choice and Authoritarian Values Score",
     x = "Classroom Choice",
     y = "Authoritarian Values Score (higher = more authoritarian)",
     color = "Classroom Choice"
@@ -135,57 +340,353 @@ AVCB_Bothscores %>% filter(!is.na(Child_Class_Self_choice)) %>%
   scale_fill_brewer(palette = "Dark2") +
   scale_x_discrete(labels=c('Colorblind', 'Color-conscious'))
 
+pClass_pAV
+```
+
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+#higher AV score = higher AV
+AV_CoBRAS_lm <- lm(COBRAS_avg ~ Parent_AVscore, data = AVCB_Bothscores_parents)
+
+sum_AV_CoBRAS_lm <- summary(AV_CoBRAS_lm)
+sum_AV_CoBRAS_lm
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(AV_CoBRAS_lm))
+
+# Extract the beta value for 'Parent_AVscore'
+beta_value <- coefficients_summary["Parent_AVscore", "Estimate"]
+
+# Extract the standard error (SE) for 'Parent_AVscore'
+se_value <- coefficients_summary["Parent_AVscore", "Std. Error"]
+
+# Extract the p-value for 'Parent_AVscore'
+p_value <- coefficients_summary["Parent_AVscore", "Pr(>|t|)"]
+```
+We also conducted a linear regression analysis to examine the association between parents' authoritarian values and their CoBRAS score. We included parents' CoBRAS score as the outcome and parents' authoritarian values score as the predictor. As expected, the results revealed a statistically significant positive relationship between parents' authoritarian values and CoBRAS score ($\beta$ = `r beta_value`, $SE$ = `r se_value`, $p$ = `r p_value`).  In line with results using parents' binary response as the outcome, the positive beta coefficient suggests that parents with higher authoritarian values scores tended to prefer the colorblind classroom over the color-conscious classroom.
+
+## Relation Between Child Measures
+### Classroom measure and Authoritarian Values
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+AVCB_Bothscores_children <- AVCB_Bothscores %>%
+  distinct(`Single Child ID`, .keep_all = TRUE)
+
+#Add column for Child_Class_Self_choice called Child_Class_Self_binary
+#1 = CB #0 = CC 
+
+AVCB_Bothscores_children <- AVCB_Bothscores_children %>%
+  mutate(Child_Class_Self_binary = ifelse(Child_Class_Self_choice == "CB", 1, 0))
+
+
+Class_self_childAV_glm <- glm(Child_Class_Self_binary ~ Child_AVscore_Self + Child_AVscore_Parent, 
+                   family = "binomial", 
+                   data = AVCB_Bothscores_children) 
+
+sum_Class_self_childAV_glm <- summary(Class_self_childAV_glm)
+sum_Class_self_childAV_glm
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(Class_self_childAV_glm))
+
+# Extract the beta value for 'Child_AVscore_Self'
+beta_value1 <- coefficients_summary["Child_AVscore_Self", "Estimate"]
+
+# Extract the standard error (SE) for 'Child_AVscore_Self'
+se_value1 <- coefficients_summary["Child_AVscore_Self", "Std. Error"]
+
+# Extract the p-value for 'Child_AVscore_Self'
+p_value1 <- coefficients_summary["Child_AVscore_Self", "Pr(>|z|)"]
+
+
+# Extract the beta value for 'Child_AVscore_Parent'
+beta_value2 <- coefficients_summary["Child_AVscore_Parent", "Estimate"]
+
+# Extract the standard error (SE) for 'Child_AVscore_Parent'
+se_value2 <- coefficients_summary["Child_AVscore_Parent", "Std. Error"]
+
+# Extract the p-value for 'Child_AVscore_Parent'
+p_value2 <- coefficients_summary["Child_AVscore_Parent", "Pr(>|z|)"]
+```
+First, we conducted a logistic regression analysis, employing a generalized linear model, to examine the association between children’s authoritarian values, their perception of their parents' authoritarian values, and their classroom preference. As the predictors we included children’s own authoritarian values and children’s perception of their parents’ authoritarian values. As the outcome, we included children's classroom preference. Neither children’s own authoritarian values ($\beta$ = `r beta_value1`, $SE$ = `r se_value1`, $p$ = `r p_value1`) nor children’s perception of their parents’ authoritarian values ($\beta$ = `r beta_value2`, $SE$ = `r se_value2`, $p$ = `r p_value2`) was related to children's classroom preference. In Figure \@ref(fig:cClass-cAV), we provide a visualization of this relation.
+
+```{r cClass-cAV, fig.cap="Relation between children's classroom choice and authoritarian values score."}
+cClass_cAV <- AVCB_Bothscores %>% filter(!is.na(Child_Class_Self_choice)) %>% 
+  ggplot(aes(x = Child_Class_Self_choice, y = Child_AVscore_Self, fill = Child_Class_Self_choice)) +
+  geom_boxplot(show.legend = FALSE) +
+  geom_jitter(show.legend = FALSE)  +
+  labs(
+    x = "Classroom Choice",
+    y = "Authoritarian Values Score (higher = more authoritarian)",
+    color = "Classroom Choice"
+  ) +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_x_discrete(labels=c('Colorblind', 'Color-conscious'))
+
+cClass_cAV
+```
+
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+#Add column for Child_Class_Parents_choice called Child_Class_Parents_binary
+#1 = CB #0 = CC 
+
+AVCB_Bothscores_children <- AVCB_Bothscores_children %>%
+  mutate(Child_Class_Parents_binary = ifelse(Child_Class_Parents_choice == "CB", 1, 0))
+
+#glm
+Class_parent_childAV_glm <- glm(Child_Class_Parents_binary ~ Child_AVscore_Self + Child_AVscore_Parent, 
+                   family = "binomial", 
+                   data = AVCB_Bothscores_children) 
+
+sum_Class_parent_childAV_glm <- summary(Class_parent_childAV_glm)
+sum_Class_parent_childAV_glm
+
+
+# Extract the coefficients from the summary
+coefficients_summary <- coef(summary(Class_parent_childAV_glm))
+
+# Extract the beta value for 'Child_AVscore_Self'
+beta_value1 <- coefficients_summary["Child_AVscore_Self", "Estimate"]
+
+# Extract the standard error (SE) for 'Child_AVscore_Self'
+se_value1 <- coefficients_summary["Child_AVscore_Self", "Std. Error"]
+
+# Extract the p-value for 'Child_AVscore_Self'
+p_value1 <- coefficients_summary["Child_AVscore_Self", "Pr(>|z|)"]
+
+
+# Extract the beta value for 'Child_AVscore_Parent'
+beta_value2 <- coefficients_summary["Child_AVscore_Parent", "Estimate"]
+
+# Extract the standard error (SE) for 'Child_AVscore_Parent'
+se_value2 <- coefficients_summary["Child_AVscore_Parent", "Std. Error"]
+
+# Extract the p-value for 'Child_AVscore_Parent'
+p_value2 <- coefficients_summary["Child_AVscore_Parent", "Pr(>|z|)"]
+```
+Next, we constructed another generalized linear model to examine the association between children’s authoritarian values, their perception of their parents' authoritarian values, and their perception of their parents' classroom preference. Again, we included children’s own authoritarian values and children’s perception of their parents’ authoritarian values as the predictors. As the outcome this time, we included children's perceptions of their parents' classroom preference. Neither children’s own authoritarian values ($\beta$ = `r beta_value1`, $SE$ = `r se_value1`, $p$ = `r p_value1`) nor children’s perception of their parents’ authoritarian values ($\beta$ = `r beta_value2`, $SE$ = `r se_value2`, $p$ = `r p_value2`) showed a statistically significant association with children's perceptions of their parents' classroom preference.
+
+## Relation Between Parent and Child Measures
+### Authoritarian Values
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE, fig.height=4}
+#pivot_longer for lmer
+
+AVCB_AVscores_longer <- AVCB_AVscores %>% pivot_longer (cols = c("Child_AVscore_Self", "Child_AVscore_Parent"), 
+                                                        names_to = "Child_AVscore_Type", 
+                                                        values_to = "Child_AVscore_Choice")
+#factoring
+AVCB_AVscores_longer$Child_AVscore_Type <- factor(AVCB_AVscores_longer$Child_AVscore_Type)
+
+#renaming
+AVCB_AVscores_longer <- AVCB_AVscores_longer %>%
+  mutate(Child_AVscore_Type = dplyr::recode(Child_AVscore_Type, "Child_AVscore_Self" = "Self", "Child_AVscore_Parent" = "Parent"))
+
+#lmer
+pc_AV_lmer <- lmer(Child_AVscore_Choice ~ Child_AVscore_Type + Parent_AVscore * Years + (1 | Family_ID), 
+                   data = AVCB_AVscores_longer)
+
+sum_pc_AV_lmer <- summary(pc_AV_lmer)
+sum_pc_AV_lmer
+```
+
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+# Extract fixed effects from pc_AV_lmer
+fixed_effects <- fixef(pc_AV_lmer)
+
+# Extract the estimate for Child_AVscore_TypeSelf
+estimate_child_avscore_type_self <- fixed_effects["Child_AVscore_TypeSelf"]
+
+# Get the summary of the model
+summary_model <- summary(pc_AV_lmer)
+
+# Extract t-value for Child_AVscore_TypeSelf
+t_value_child_avscore_type_self <- summary_model$coefficients["Child_AVscore_TypeSelf", "t value"]
+t_value_child_avscore_type_self 
+
+# Extract df for Child_AVscore_TypeSelf
+# Get the total number of observations
+n_obs <- nobs(pc_AV_lmer)
+
+# Extract residual degrees of freedom
+df_residual <- summary_model$varcor$Family_ID[1]
+
+# Calculate total degrees of freedom
+df_total <- n_obs - df_residual
+df <- df_residual + df_total
+
+# Compute p-value
+p_value_child_avscore_type_self <- 2 * pt(abs(t_value_child_avscore_type_self ), df, lower.tail = FALSE)
+
+#####
+
+# Get the summary of the model
+summary_model <- summary(pc_AV_lmer)
+
+# Extract the estimate for Parent_AVscore
+estimate_parent_avscore <- summary_model$coefficients["Parent_AVscore", "Estimate"]
+
+# Extract t-value for Parent_AVscore
+t_value_parent_avscore <- summary_model$coefficients["Parent_AVscore", "t value"]
+
+# Extract df for Parent_AVscore
+# Get the total number of observations
+n_obs <- nobs(pc_AV_lmer)
+
+# Extract residual degrees of freedom
+df_residual <- summary_model$varcor$Family_ID[1]
+
+# Calculate total degrees of freedom
+df_total <- n_obs - df_residual
+df <- df_residual + df_total
+
+# Compute p-value
+p_value_parent_avscore <- 2 * pt(abs(t_value_parent_avscore), df, lower.tail = FALSE)
+
+####
+
+# Extract the estimate for Parent_AVscore:Years
+estimate_interaction <- summary_model$coefficients["Parent_AVscore:Years", "Estimate"]
+
+# Extract t-value for Parent_AVscore:Years
+t_value_interaction <- summary_model$coefficients["Parent_AVscore:Years", "t value"]
+
+# Extract df for Parent_AVscore
+# Get the total number of observations
+n_obs <- nobs(pc_AV_lmer)
+
+# Extract residual degrees of freedom
+df_residual <- summary_model$varcor$Family_ID[1]
+
+# Calculate total degrees of freedom
+df_total <- n_obs - df_residual
+df <- df_residual + df_total
+
+# Compute p-value
+p_value_interaction <- 2 * pt(abs(t_value_interaction), df, lower.tail = FALSE)
+```
+To examine the relationship between parents' and children's authoritarian values, we used a linear mixed-effects model with a random intercept for each dyad. As the outcome, we included children’s authoritarian values. As the predictors, we included question perspective (children's own values and children's perception of their parents' values) and parents' actual authoritarian values. Additionally, we included the interaction between parents' actual authoritarian values and chidren's age into the model. The analysis revealed significant main effects for the type of authoritarian values score, where children's average authoritarian values score was notably lower compared to children's perception of their parents'authoritarian values ($\beta$ = `r estimate_child_avscore_type_self`, $t$ = `r t_value_child_avscore_type_self`, $p$ = `r p_value_child_avscore_type_self`). However, the effects of parents' authoritarian values ($\beta$ = `r estimate_parent_avscore`, $t$ = `r t_value_parent_avscore`, $p$ = `r p_value_parent_avscore`) and the interaction between parents' authoritarian value and children's age ($\beta$ = `r estimate_interaction`, $t$ = `r t_value_interaction`, $p$ = `r p_value_interaction`) were not statistically significant. In Figure\ \@ref(fig:pAV-cAV-age), we provide a visualization of this relation.
+
+```{r pAV-cAV-age, fig.cap="Relation between parents' and children's authoritarian values by child's age.", warning=FALSE}
+pAV_cAV_age <- AVCB_AVscores %>% 
+  ggplot(aes(x = Parent_AVscore, y = Child_AVscore_Self, color = factor(Years))) +
+  facet_grid(cols = vars(Years),
+             labeller = labeller(Years = c("6" = "6 years", "7" = "7 years", "8" = "8 years", "9" = "9 years", "10" = "10 years"))) +
+  geom_jitter() +
+  geom_smooth(method = "lm") +
+  labs(
+    x = "Parent Authoritarian Values Score (higher = more authoritarian)",
+    y = "Child Authoritarian Values Score (higher = more authoritarian)",
+    color = "Child Age (Years)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "bottom") +
+  scale_color_brewer(palette = "Dark2")
+
+pAV_cAV_age
+```
+
+```{r, echo=FALSE, results='hide', warning=FALSE, error=FALSE}
+#pivot_longer
+
+AVCB_DIscores_longer <- AVCB_DIscores %>% pivot_longer (cols = c("Child_Class_Self_choice",                     "Child_Class_Parents_choice"), 
+                                                        names_to = "Child_Class_Type", 
+                                                        values_to = "Child_Class_Choice")
+
+#factoring
+AVCB_DIscores_longer$Child_Class_Type <- factor(AVCB_DIscores_longer$Child_Class_Type)
+
+#renaming
+AVCB_DIscores_longer <- AVCB_DIscores_longer %>%
+  mutate(Child_Class_Type = dplyr::recode(Child_Class_Type, "Child_Class_Self_choice" = "Self", "Child_Class_Parents_choice" = "Parent"))
+
+#glmer
+pc_DI_glmer <- glmer(
+  Child_Class_Choice ~ Child_Class_Type + Parent_Class_Self_choice + Self_diff * Years + (1 | Family_ID),
+  family = binomial,
+  data = AVCB_DIscores_longer
+)
+
+pc_DI_glmer <- summary(pc_DI_glmer)
+pc_DI_glmer
 ```
 
 ```{r}
+# Get the summary of the model
+summary_model <- summary(pc_DI_glmer)
 
+# Extract the estimate for Parent_Class_Self_choiceCC
+estimate_parent_class_cc <- summary_model$coefficients["Parent_Class_Self_choiceCC", "Estimate"]
+
+# Extract t-value for Parent_Class_Self_choiceCC
+t_value_parent_class_cc <- summary_model$coefficients["Parent_Class_Self_choiceCC", "z value"]
+
+# Extract p-value for Parent_Class_Self_choiceCC
+p_value_parent_class_cc <- summary_model$coefficients["Parent_Class_Self_choiceCC", "Pr(>|z|)"]
+
+
+
+# Get the summary of the model
+summary_model <- summary(pc_DI_glmer)
+
+# Extract the estimate for Years
+estimate_years <- summary_model$coefficients["Years", "Estimate"]
+
+# Extract t-value for Years
+t_value_years <- summary_model$coefficients["Years", "z value"]
+
+# Extract p-value for Years
+p_value_years <- summary_model$coefficients["Years", "Pr(>|z|)"]
+
+
+# Get the summary of the model
+summary_model <- summary(pc_DI_glmer)
+
+# Extract the estimate for Self_diff:Years
+estimate_interaction <- summary_model$coefficients["Self_diff:Years", "Estimate"]
+
+# Extract t-value for Self_diff:Years
+t_value_interaction <- summary_model$coefficients["Self_diff:Years", "z value"]
+
+# Extract p-value for Self_diff:Years
+p_value_interaction <- summary_model$coefficients["Self_diff:Years", "Pr(>|z|)"]
+```
+### Diversity Ideology
+To examine the relationship between parents' and children's diversity ideologies, we conducted a generalized linear mixed model with a random intercept for each dyad. As the outcome, we included children's classroom preference. As predictors, we included question perspective (children's classroom preference and children's perception of their parents' classroom preference), parents' actual classroom preference, and the difference score between parents' ratings of the colorblind and color-conscious classrooms (higher scores = more colorblind). Additionally, we included the interaction between parents' actual classroom preference and children's age into the model. The analysis revealed significant main effects for parents' classroom preference, where children were less likely to prefer the color-conscious classroom when parents choose the color-conscious classroom ($\beta$ = `r estimate_parent_class_cc`, $t$ = `r t_value_parent_class_cc`, $p$ = `r p_value_parent_class_cc`). There was also a main effect of children's age, suggesting that with age, children were more likely to choose the color-conscious classroom ($\beta$ = `r estimate_years`, $t$ = `r t_value_years`, $p$ = `r p_value_years`). However, the interaction between parents' classroom choice and children's age ($\beta$ = `r estimate_interaction`, $t$ = `r t_value_interaction`, $p$ = `r p_value_interaction`) was not statistically significant. In Figure\ \@ref(fig:pClass-cClass), we provide a visualization of this relation.
+
+```{r pClass-cClass, fig.cap="Relation between parents' and children's classroom preference.", warning=FALSE}
+pClass_cClass <- AVCB_DIscores %>% filter(!is.na(Child_Class_Self_choice)) %>%  
+  ggplot(aes(x = Child_Class_Self_choice, fill = Parent_Class_Self_choice)) +
+  geom_bar(position = "fill") +
+  labs(
+       x = "Child Classroom Choice",
+       y = "Count",
+       fill = "Parent Classroom Choice",
+       caption = "CB = colorblind and CC = color-conscious"
+  ) +
+  theme_classic() +
+  scale_fill_brewer(palette = "Dark2")
+
+pClass_cClass
 ```
 
-In Table \@ref(tab:dem-table), we can see the summary of XYZ.
+```{r corr, results='hold', warning=FALSE}
+source("Source/AVCB_analyses.R")
 
-```{r dem-table, results='asis', fig.cap="This is the caption.", echo=FALSE}
-source("Scripts/AVCB_tables.R")
+matr <- apa.cor.table(AVCB_wp_dyads_corr, filename = NA)
 
-gender_table %>% apa_table()
-race_match_table %>% apa_table()
-race_table %>% apa_table()
-income_table %>% apa_table()
-pol_table %>% apa_table()
-ed_table %>% apa_table()
-
+# Now, create the APA-style table
+apa_table(matr$table.body, caption = matr$table.title, note = matr$table.note, font_size = "footnotesize", row.names = F, placement = "p")
 ```
-
-```{r analyses-descriptives}
-#source("Scripts/AVCB_analyses.R")
-#sum_glmer_cAVpAV 
-
-
-```
-
-```{r analyses-hypothesis tests}
-#source("Scripts/AVCB_analyses.R")
-
-
-```
-The correlation between parents' authoritarian values score and COBRAS score shows that there is some positive association: as parents' authoritarian values score increases, their COBRAS score increases too (and this effect was significant).
-
-# Methods
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
-
-## Participants
-
-## Material
-
-## Procedure
-
-## Data analysis
-We used `r cite_r("r-references.bib")` for all our analyses.
-
-
-# Results
+In Table \@ref(tab:corr), we provide a correlation table showing the relations between parents' and children's measures.
 
 # Discussion
 
+The primary purpose of this study was to understand the interplay between parents’ socio-political attitudes and racial ideologies and relations with children's developing attitudes toward talking about racial diversity and inclusion. Specifically, we investigated how authoritarian values relate to parents’ endorsement of these messages and predict the socialization of racial ideologies and children’s developing values and ideologies.
+
+We examined authoritarian and colorblind values among parents and their 6-10-year-old children to assess three main research questions: (1) What is the relation between parents’ authoritarian values and children’s authoritarian values; (2) What is the relation between parents’ colorblind values and children’s colorblind values; and (3) How do colorblind and authoritarian values relate to one another (among both parents and children).
+
+We had three primary hypotheses. First, we hypothesized that parents’ authoritarian values would positively predict children’s own authoritarian values and that this relation would strengthen with age. Second, we hypothesized that parents’ diversity ideology would positively predict children’s own diversity ideology, and that this relation would strengthen with age. Third, we hypothesized that higher authoritarian values would positively predict more colorblind attitudes among dyads.
+
+We found support that among parents, greater authoritarian values was predictive of greater colorblind attitudes. The results also showed that our novel measure of parents' and children's colorblind values was highly correlated with an existing scale of adults colorblind attitudes. Additionally, we found that with age, children were more likely to show a preference for the color-conscious classroom. Preliminary analyses did not provide evidence to support all of our hypotheses, especially those concerning the relations between parents' and children's values. Further data analyses are needed to make accurate conclusions about the data.
 
 \newpage
 
