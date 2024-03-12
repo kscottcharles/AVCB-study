@@ -1,0 +1,261 @@
+---
+title: "final-evaluation-kaila"
+output: html_document
+date: "2024-03-10"
+---
+
+# Assignment Info
+
+- **Student name:** Kaila Scott-Charles
+- **Project title:** Investigating the Influence of Authoritarian Values on the Development of Diversity Ideologies
+- **Submission date:** Mar 8 2024 12:23 (extension)
+
+## Report plan summary
+
+-	The specific plans for you analysis, figure, and table chunks
+-	Figures
+-	Scatterplot showing the relation between parents' authoritarian values score and children's authoritarian values score by children's age (6, 7, 8, 9, 10)
+-	Boxplots showing the relation between children's classroom choice and parents' colorblindness score by children's age (6, 7, 8, 9, 10)
+-	Bar plot showing the relations between childrens' and parents' classroom choice (possibly by children's age, too)
+-	Scatterplot showing the relation between parents' authoritarian values score and colorblindness score
+-	Boxplots showing the relation between childrens' authoritarian values score and classroom choice by children's age (6, 7, 8, 9, 10)
+-	Analyses
+-	Regression with parents' authoritarian values score as predictor and children's authoritarian values score as outcome
+-	T-test to test whether the means of parents' colorblindness score is different among children who chose the colorblind vs. color-conscious classroom 
+-	Chi-sq for relationship between childrens' and parents' classroom choice OR logistic regression analysis with age as a covariate
+-	Regression with parents' authoritarian values score as predictor and parents' colorblindess score as outcome
+-	T-test to test whether the means of children's authoritarian values score is different among kids who chose the colorblind vs. color-conscious classroom 
+-	Table
+-	Demographics for parents and children
+-	Correlation matrix between main variables of interest
+-	Possibly a table showing the results of the models
+-	A general description for how you will distribute the 1500+ words across 4 sections
+-	Intro - I plan for this section to be pretty brief (maybe a couple of paragraphs
+-	Methods - I plan for this section (along with the results) to be the bulk of the word count
+-	Results - I plan for this section (along with the methods) to be the bulk of the word count
+-	Discussion - I plan this section to have least number of words (mostly will include summarizing the main findings)
+-	At least 2 elements of code produced in code chunks that you can referent in text (e.g., a p-value from the model you run in your analysis chunk, a value within the table you created in the table chunk, a summary value like mean or median that you calculated and stored as a variable)
+-	If I'm interpretting this correctly:
+-	I will reference the p-values from the models I run and the mean/sd of variables in my demographic table in tex
+-	2-4 sentences explaining your personal goals for the final report. What do you want to have accomplished or learned by the time you submit your report at the end of the quarter?
+-	How to generally create code that is easy to follow and follows R best practices
+-	Using ggplot to create the right graph to effectively convey my data
+-	Sourcing code from a script in Rmd for cleaner look
+-	Creating manuscript ready tables in R
+
+
+# Assessment
+
+The lists of expectations in each category are to help you understand the kinds of things I'm looking for as I grade. These **do not** map onto point values. A checked box indicates the expectation was met or exceeded. (This also helps me spot patterns across students to identify ways I can improve the syllabus and lectures for future students.)
+
+Ratings indicate overall success for each category and loosely map onto points. Starting from 20 points, no points are lost for the highest rating, -3 for the lowest, and somewhere in between for the middle ratings. Points lost in that range are dependent on how many issues there are, how much they matter, whether it's technicality vs problem of consequence, whether it's the same core issue that lost you points in a different section, whether exceeding expectations elsewhere compensate for a small issue, whether it's something we talked about in your report plan meeting, etc. 
+
+Additional comments are included below the ratings as needed. Final project and class grades are included at the end of the document.
+
+**WARNING: Grades for this assignment are going to be lower than you expect!** Don't freak out. I use "specs-based grading", which works very differently from the letter-grade-to-percentage conversion you are probably used to. It's more like Harry Potter OWLs -- 19/20 is outstanding, 16-18 exceeds expectations (not a C!), 13-15 meets expectations (not an F!), etc. You're not down to T(roll) until you're in the negatives. Remember this is only 20% of your final grade!
+
+## .Rmd/PDF match
+
+**Expectations:**
+
+- [ ] PDF submitted to Canvas is identical to the PDF created when I knit your .Rmd
+- [ ] Knitting does not produce any errors or problematic warnings
+
+**Rating:**
+
+- [ ] Perfect match
+- [ ] At least one minor problem
+- [x] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive error(s), missing PDF, or significant problems
+
+Fatal errors in knitting; packages not installed
+
+Knitted file running cite_r() only cites a few packages, cites many in submitted pdf (this is because you have mismatched bibliography files)
+
+## Data read-in, prep, wrangling
+
+**Expectations:**
+
+- [x] Data preparation and wrangling code present (may separate files)
+- [x] Intermediate datasets (if used) are functional and read in successfully
+- [x] Raw or intermediate data read into .Rmd code chunk
+- [x] All code in .R files and .Rmd code chunks is sufficiently commented and comprehensible
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [x] No noteworthy issues 
+- [ ] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+*No additional comments*
+
+## Figures, tables, analyses
+
+### Figures
+
+**Expectations:**
+
+- [x] At least 2 plots are produced in .Rmd chunks (not imported images)
+- [x] Figures are different kinds of plots 
+- [x] Figures follow report plan (may have inconsequential deviations)
+- [x] Figures are publication-quality
+- [x] Figures are sensibly captioned with `fig.cap` chunk option
+- [x] Figures are informative and interpretable
+- [x] All code in .R files and .Rmd code chunks is sufficiently commented and comprehensible
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [x] No noteworthy issues 
+- [ ] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+These look fantastic!! Two small recommendations: 1) take out the "(higher = more authoritarian)" from your axis titles (put it in the fig.cap caption or as a note below the plot in the labs() layer caption argument) so you don't risk it getting cut off at the top like in Fig4 and 2) try Figure 4 as *only* grouped by color with no faceting (assuming you haven't already). Color+facet might be the best option, but if just using color can clearly convey the message with less clutter that's probably better.
+
+### Table
+
+**Expectations:** 
+
+If you included more than the one required table, only one needs to meet expectations.
+
+- [x] At least 1 table is produced in .Rmd chunk
+- [x] Table follows report plan (may have inconsequential deviations)
+- [x] Table is publication-quality
+- [x] Table is sensibly captioned within the function (e.g., the kable caption argument)
+- [x] Table is informative and interpretable
+- [x] All code in .R files and .Rmd code chunks is sufficiently commented and comprehensible
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [x] No noteworthy issues 
+- [ ] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+Beautiful! I'll have to look closer at this apaTables package where you got the apa.cor.table() function from. It seems super useful!
+
+### Analysis
+
+**Expectations:**
+
+If you included more than the one required analysis (or other requirements agreed on in the report plan), only one needs to meet expectations.
+
+- [x] At least 1 statistical analysis is executed in .Rmd chunk (or sourced code if appropriate)
+- [x] Analysis follows report plan (may have inconsequential deviations)
+- [x] Analysis is executed correctly
+- [x] Analysis is appropriate (not necessarily ideal) for data type(s) and research questions
+- [x] Analysis is referenced and interpreted in narrative text
+- [x] All code in .R files and .Rmd code chunks is sufficiently commented and comprehensible
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [x] No noteworthy issues 
+- [ ] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+*No additional comments*
+
+## Manuscript
+
+### Narrative text
+
+**Expectations:**
+
+- [x] Narrative text includes 1500+ words distributed across 4 sections
+- [x] Sufficient literature review (per report plan)
+- [x] Sufficient methods section (per report plan)
+- [x] Sufficient results section (per report plan)
+- [x] Sufficient discussion (per report plan)
+- [x] Narrative provides sufficient context and interpretation for all figures, tables, and analyses
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [x] No noteworthy issues 
+- [ ] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+*No additional comments*
+
+### Markdown
+
+**Expectations:**
+
+- [x] Figures and tables are successfully referenced with markdown syntax
+- [x] At least 2 in-text code references
+- [x] At least 1 in-text code reference includes in-text function
+- [x] R Markdown is used effectively to follow APA format (e.g., headings, emphasized text)
+- [x] YAML header is functional and complete
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [x] No noteworthy issues 
+- [ ] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+Great use of inline r code!! It looks like you used references for literally very data-dependent value to be printed in the text. That's exactly the point of working in RStudio, but it definitely takes some getting used to (plus a lot of time and energy figuring out how to fully convert EVERYTHING to the inline R side!) Really nice!!
+
+### BibTeX
+
+**Expectations:**
+
+- [x] At least 10 in-text citations using BibTeX reference syntax
+- [x] In-text citations are rendered without errors
+- [x] In-text citations have no obvious problems (e.g., incorrect special characters)
+- [ ] R and R packages are cited in-text using `cite_r()`
+- [x] References page renders without errors
+- [x] References page is APA formatted and free of obvious problems
+- [x] Additional expectations set in the report plan (if any) are met
+
+**Rating:**
+
+- [ ] No noteworthy issues 
+- [x] At least one minor problem
+- [ ] At least one major problem and/or multiple minor problems
+- [ ] Multiple major problems
+- [ ] Prohibitive errors or significant problems
+
+As noted above with the knitting issue -- your manuscript tries to reference two separate bibliography files: r-references.bib and AVCB_references.bib (which is the one it's actually using to produce the references page and create in the in-text citations). the cite_r() function is trying to pull from the other one and coming up short
+
+## GitHub & best practices
+
+These expectations will not have an impact on your grade unless there are egregious issues, but I include them to give you feedback on what you can do if you use this workflow going forward.
+
+**Expectations:**
+
+- [x] GitHub repo and contained files are sensibly and informatively named
+- [x] GitHub repo is well-structured and tidy
+- [x] GitHub README.md file is informative
+- [ ] Commit messages are informative
+- [x] Style is (relatively) consistent
+- [x] Comments are frequent and informative
+- [ ] Code chunks have informative names, follow 1-chunk-1-thing rule, and are distributed throughout the text
+
+Name all your code chunks!!
+
+## Overall
+
+Fantastic work, Kaila! This came together beautifully. 
+
+# Grade
+
+- **Final report grade:** 18
+- **Class participation grade:** 18
+- **Weekly assignments:** 60
+- **TOTAL Final course grade:** 96 (A)
